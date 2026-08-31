@@ -49,8 +49,8 @@ export default async function(eleventyConfig) {
     eleventyConfig.addGlobalData('settings', {
         // these get merged with content/_data/settings.js
         url: process.env.URL || process.env.CF_PAGES_URL || 'http://localhost:8080',
-        isProduction: process.env.NODE_ENV === 'production',
-        isStaging: (process.env.URL && process.env.URL.includes('github.io')) || (process.env.CF_PAGES_BRANCH && process.env.CF_PAGES_BRANCH !== 'main') || (process.env.NODE_ENV === 'staging') || false,
+        isProduction: process.env.ELEVENTY_ENV === 'production',
+        isStaging: (process.env.URL && process.env.URL.includes('github.io')) || (process.env.CF_PAGES_BRANCH && process.env.CF_PAGES_BRANCH !== 'main') || (process.env.ELEVENTY_ENV === 'staging') || false,
         year: new Date().getFullYear(),
         theme: process.env.ELVA_THEME || settings.theme
     });
