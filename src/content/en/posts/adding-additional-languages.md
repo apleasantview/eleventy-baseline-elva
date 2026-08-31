@@ -76,4 +76,4 @@ All language configuration is stored in `content/_data/locales.json`. You can ed
 
 After editing `locales.json` by hand, you will need to create the corresponding language folder under `content/` and the per-locale data files under `content/_data/` (translations, stopwords) for the language to work correctly. Using the CLI is the recommended approach for adding languages, as it handles all of this automatically.
 
-Next up, configure your [collections](/documentation/collections/).
+Next up, configure your [collections](/documentation/managing-collections/).

@@ -26,7 +26,7 @@ Den nya filen skapas med hjälp av en mall. Om det finns en mall för den valda 
 
 När du skapar innehåll för en flerspråkig webbplats kan du välja flera målspråk samtidigt. CLI skapar en separat fil för varje valt språk.
 
-För att språkväljaren ska fungera på en viss sida (när du tillhandahåller samma innehåll på olika språk) måste markdown-filerna ha samma filnamn i alla språkversioner. De faktiska URL:erna kan konfigureras via fältet `seo.slug` i [front matter](/sv/dokumentation/frontmatter/).
+För att språkväljaren ska fungera på en viss sida (när du tillhandahåller samma innehåll på olika språk) måste markdown-filerna ha samma filnamn i alla språkversioner. De faktiska URL:erna kan konfigureras via fältet `seo.slug` i [front matter](/sv/dokumentation/front-matter/).
 
 ``` bash
 npm run cli content add
@@ -62,4 +62,4 @@ elva skiljer sig lite från andra startpaket här, eftersom miniatyrbilderna gen
 npm run cli content regenerate
 ```
 
-[Blogroll, någon](/sv/dokumentation/blogroll/)?
+[Blogroll, någon](/sv/dokumentation/skapa-en-blogglista/)?

@@ -26,7 +26,7 @@ The new file is created using a template. If a template exists for the selected 
 
 When creating content for a multilingual site, you can select multiple target languages at once. The CLI creates a separate file for each selected language.
 
-For the language switcher to work on a given page (when you are providing the same content in different languages), the markdown files must have the same filename across all locales. Actual URLs can be configured via the [front matter](/documentation/frontmatter/) `seo.slug` field.
+For the language switcher to work on a given page (when you are providing the same content in different languages), the markdown files must have the same filename across all locales. Actual URLs can be configured via the [front matter](/documentation/front-matter/) `seo.slug` field.
 
 ``` bash
 npm run cli content add

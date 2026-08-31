@@ -143,4 +143,4 @@ Translation keys are scoped by template or include. A common convention is to pr
 
 This keeps translations organized and makes it easy to find where a string is used. The key does not need to match the template filename exactly — it should describe the purpose of the string instead.
 
-Next up, [manage your content](/documentation/content/).
+Next up, [manage your content](/documentation/managing-content/).
