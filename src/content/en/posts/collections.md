@@ -1,5 +1,6 @@
 ---
 title: Managing collections
+slug: managing-collections
 date: 2026-06-09
 tags:
   - tag1

@@ -1,7 +1,6 @@
 ---
 title: Komma igång
-seo:
-  slug: komma-igang
+slug: komma-igang
 date: 2026-06-12
 tags:
   - tag1

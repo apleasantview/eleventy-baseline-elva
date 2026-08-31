@@ -1,11 +1,10 @@
 ---
 title: Hantering samlingar
+slug: samlingar
 date: 2026-06-09
 tags:
   - tag1
   - tag3
-seo:
-  slug: samlingar
 ---
 
 Samlingar i elva liknar anpassade inläggstyper i WordPress. De utgör det verktyg som du använder för att organisera olika typer av innehåll i grupper, där varje grupp har sin egen URL-struktur, layout och funktionalitet.

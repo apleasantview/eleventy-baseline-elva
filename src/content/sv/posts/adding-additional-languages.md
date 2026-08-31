@@ -1,11 +1,10 @@
 ---
 title: Språkhantering
+slug: sprakhantering
 date: 2026-06-10
 tags:
   - tag2
   - tag4
-seo:
-  slug: sprakhantering
 ---
 
 Språkhanteringen kan skötas via kommandoradsgränssnittet (CLI), där alla språkinställningar lagras i `content/_data/locales.json`. Du kan hantera språk via det interaktiva menyn genom att köra `npm run cli` och välja `"Languages"`, eller använda de direkta kommandokortkommandon som beskrivs nedan.

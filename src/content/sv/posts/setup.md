@@ -1,12 +1,11 @@
 ---
 title: Inställningar
+slug: installningar
 date: 2026-06-11
 tags:
   - tag3
   - tag4
   - unik
-seo:
-  slug: installningar
 ---
 
 Du öppnar inställningsmenyn via kommandoraden genom att köra `npm run cli` och välja ”Setup” i huvudmenyn, eller genom att använda de direkta kommandokortkommandon som beskrivs nedan.

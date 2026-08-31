@@ -1,7 +1,6 @@
 ---
 title: Bildinbäddnings exempel
-seo:
-  slug: bildinbaddnings-exempel
+slug: bildinbaddnings-exempel
 date: 2023-08-03
 tags:
   - tag2

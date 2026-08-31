@@ -1,8 +1,7 @@
 ---
 title: Dokumentation
+slug: dokumentation
 layout: posts
-seo:
-  slug: dokumentation
 eleventyNavigation:
   key: docs
   title: Dokumentation

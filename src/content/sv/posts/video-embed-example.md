@@ -1,7 +1,6 @@
 ---
 title: Exempel på videoinbäddning
-seo:
-  slug: exempel-pa-videoinbaddning
+slug: exempel-pa-videoinbaddning
 date: 2023-08-01
 tags:
   - tag2

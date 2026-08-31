@@ -1,11 +1,10 @@
 ---
 title: Hantera innehåll
+slug: innehall
 date: 2026-06-07
 tags:
   - tag2
   - tag5
-seo:
-  slug: innehall
 ---
 
 Det rekommenderade sättet är att hantera ditt innehåll via [Front Matter CMS](https://frontmatter.codes/). Detta ger dig ett grafiskt gränssnitt för att skapa, redigera och ta bort innehållsfiler utan att behöva använda kommandoraden. Front Matter CMS aktiveras automatiskt när du har VSCodium eller Visual Studio Code installerat och tillägget är aktiverat.

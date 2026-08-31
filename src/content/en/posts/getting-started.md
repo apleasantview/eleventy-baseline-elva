@@ -1,5 +1,6 @@
 ---
 title: Getting started
+slug: getting-started
 date: 2026-06-12
 tags:
   - tag1

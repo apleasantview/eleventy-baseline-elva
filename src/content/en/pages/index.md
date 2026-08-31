@@ -1,9 +1,10 @@
 ---
 title: Home
+slug: home
+translationKey: index
 layout: home
 tags: _home
 seo:
-  slug: /
   title: Sustainable 11ty starter theme
   description: elva is an 11ty starter theme with a focus on performance, i8ln and easy content management with Front Matter CMS.
 ---

@@ -1,5 +1,6 @@
 ---
 title: Managing languages
+slug: managing-languages
 date: 2026-06-10
 tags:
   - tag2

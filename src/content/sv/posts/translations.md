@@ -1,11 +1,10 @@
 ---
 title: Hantera översättningar
+slug: oversattningar
 date: 2026-06-08
 tags:
   - tag1
   - tag2
-seo:
-  slug: oversattningar
 ---
 
 Översättningar i elva lagras som JSON-filer under `content/_data/translations/`, med en fil per språk (t.ex. `en.json`, `sv.json`). Översättningsfilen för standardspråket fungerar som den giltiga källan. När du lägger till ett nytt språk skapas en kopia av standardöversättningsfilen för den språkversionen, som du sedan kan anpassa.

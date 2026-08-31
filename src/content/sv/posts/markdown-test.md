@@ -1,7 +1,6 @@
 ---
 title: Markdown testa
-seo:
-  slug: markdown-testa
+slug: markdown-testa
 date: 2026-06-05
 tags:
   - tag4
