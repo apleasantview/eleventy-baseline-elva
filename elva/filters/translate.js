@@ -1,7 +1,7 @@
 // finds a translation from content/_data/translations.js
 // can support data substitution, for example: {{ 'translation.key' | translate(page.lang, { data: 500 }) }}
 // supports plurals: {{ 'readingTime.count' | translate(page.lang, { minutes: 5, count: 5 }) }}
-import nunjucks from '@11ty/nunjucks';
+import nunjucks from 'nunjucks';
 import { getProperty } from 'dot-prop';
 nunjucks.configure({ autoescape: true });
 
