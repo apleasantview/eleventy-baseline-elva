@@ -148,7 +148,7 @@ const setupTheme = async () => {
     const themeDirectories = themes.filter(folder => folder.isDirectory()).map(folder => ({ name: folder.name, value: folder.name }));
     
     if (themeDirectories.length === 0) {
-        error('No themes found in the themes/ directory.');
+        error('No themes found in the src/themes/ directory.');
         return;
     }
     
@@ -185,7 +185,7 @@ const setupNewTheme = async () => {
         return;
     }
 
-    const themesPath = path.join(process.cwd(), 'themes');
+    const themesPath = path.join(process.cwd(), 'src', 'themes');
     const sourcePath = path.join(themesPath, 'default');
     const destPath = path.join(themesPath, sanitizedName);
 
@@ -217,7 +217,7 @@ const deleteDefaultContent = async () => {
 
     for (const locale of localesData.locales) {
         for (const collection of collections) {
-            const collectionDir = path.join(process.cwd(), 'content', locale.value, collection);
+            const collectionDir = path.join(process.cwd(), 'src', 'content', locale.value, collection);
             if (!existsSync(collectionDir)) {
                 continue;
             }

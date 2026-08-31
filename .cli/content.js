@@ -68,7 +68,7 @@ const addContent = async () => {
     for (const localeKey of content.locales) {
         
         // construct file path based on content type and locale
-        const filePath = `content/${localeKey}/${content.contentType}/${content.slug}.md`;
+        const filePath = `src/content/${localeKey}/${content.contentType}/${content.slug}.md`;
         
         // check for content-type-specific template existence
         let templateContent = '';
@@ -114,7 +114,7 @@ const removeContent = async () => {
 
     // glob through all markdown files in the content folder looking for a match
     slug = path.parse(slug).name;
-    const pattern = `content/**/*${slug}*.md`;
+    const pattern = `src/content/**/*${slug}*.md`;
     const files = globSync(pattern, { cwd: process.cwd() }).filter(f => {
         const name = path.parse(f).base;
         return name !== '404.md';
@@ -164,11 +164,11 @@ const regenerateOpengraph = async () => {
     let totalFailed = 0;
 
     for (const locale of localesData.locales) {
-        const pattern = `content/${locale.value}/**/*.md`;
-        const files = globSync(pattern, { cwd: process.cwd(), ignore: ['content/**/_*/**/*'] });
+        const pattern = `src/content/${locale.value}/**/*.md`;
+        const files = globSync(pattern, { cwd: process.cwd(), ignore: ['src/content/**/_*/**/*'] });
 
         if (files.length === 0) {
-            info(`No markdown files found in content/${locale.value}/`);
+            info(`No markdown files found in src/content/${locale.value}/`);
             continue;
         }
 
@@ -317,7 +317,7 @@ const importContent = async () => {
 
     // configure and run importer
     const importer = new Importer();
-    importer.setOutputFolder(`content/${targetLocale}/${targetCollection}/`);
+    importer.setOutputFolder(`src/content/${targetLocale}/${targetCollection}/`);
     importer.setCacheDuration('48h');
     importer.setAssetReferenceType('colocate');
     importer.setAssetsFolder('/assets/img');
@@ -384,9 +384,9 @@ const importContent = async () => {
         if (!isDryRun) {
             await importer.toFiles(entries);
 
-            // move assets from per-collection folders to shared content/assets/img/
-            const assetsSourceDir = `./content/${targetLocale}/${targetCollection}/assets/img`;
-            const assetsTargetDir = `./content/assets/img`;
+            // move assets from per-collection folders to shared src/assets/img/
+            const assetsSourceDir = `./src/content/${targetLocale}/${targetCollection}/assets/img`;
+            const assetsTargetDir = `./src/assets/img`;
 
             if (existsSync(assetsSourceDir)) {
                 mkdirSync(assetsTargetDir, { recursive: true });
@@ -403,7 +403,7 @@ const importContent = async () => {
                     }
                 }
 
-                rmSync(path.join(`./content/${targetLocale}/${targetCollection}/assets`), { recursive: true, force: true });
+                rmSync(path.join(`./src/content/${targetLocale}/${targetCollection}/assets`), { recursive: true, force: true });
 
                 info(`Moved ${assetFiles.length} asset(s) to ${assetsTargetDir}.`);
             }

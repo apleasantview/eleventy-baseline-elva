@@ -9,3 +9,4 @@ src/themes/*
 
 # usual suspects
 temp/
+!.frontmatter/scripts/

@@ -59,7 +59,7 @@ const addLanguage = async () => {
     data[newLanguage.locale] = newLanguage;
 
     // create the folder for the new language
-    const folderPath = path.join(process.cwd(), 'content', newLanguage.locale);
+    const folderPath = path.join(process.cwd(), 'src', 'content', newLanguage.locale);
     mkdirSync(folderPath, { recursive: true });
 
     // create the locale JSON file
@@ -74,14 +74,14 @@ const addLanguage = async () => {
 
     // create data files for new locale
     const createLocaleFile = (type, content) => {
-        const dir = path.join(process.cwd(), 'content', '_data', type);
+        const dir = path.join(process.cwd(), 'src', '_data', type);
         mkdirSync(dir, { recursive: true });
         const filePath = path.join(dir, `${newLanguage.locale}.json`);
         writeFileSync(filePath, JSON.stringify(content, null, 4));
     };
 
     try {
-        const defaultTranslations = JSON.parse(readFileSync(path.join(process.cwd(), 'content', '_data', 'translations', `${defaultLocale}.json`), 'utf-8'));
+        const defaultTranslations = JSON.parse(readFileSync(path.join(process.cwd(), 'src', '_data', 'translations', `${defaultLocale}.json`), 'utf-8'));
         createLocaleFile('translations', defaultTranslations);
     } catch (err) {
         error(`Failed to create translations file: ${err.message}.`);
@@ -95,8 +95,8 @@ const addLanguage = async () => {
 
     // ask if user wants to copy content from default locale
     if (await confirm({ message: `Would you like to copy content from '${defaultLocale}' to '${newLanguage.locale}'?` })) {
-        const defaultContentDir = path.join(process.cwd(), 'content', defaultLocale);
-        const newContentDir = path.join(process.cwd(), 'content', newLanguage.locale);
+        const defaultContentDir = path.join(process.cwd(), 'src', 'content', defaultLocale);
+        const newContentDir = path.join(process.cwd(), 'src', 'content', newLanguage.locale);
     
         // get all files in the default locale except the JSON file
         const files = readdirSync(defaultContentDir);
@@ -138,14 +138,14 @@ const removeLanguage = async () => {
     }
     
     // remove the content folder
-    const contentFolderPath = path.join(process.cwd(), 'content', result);
+    const contentFolderPath = path.join(process.cwd(), 'src', 'content', result);
     if (existsSync(contentFolderPath)) {
         rmSync(contentFolderPath, { recursive: true });
     }
 
     // remove per-locale files
-    const translationsPath = path.join(process.cwd(), 'content', '_data', 'translations', `${result}.json`);
-    const stopwordsPath = path.join(process.cwd(), 'content', '_data', 'stopwords', `${result}.json`);
+    const translationsPath = path.join(process.cwd(), 'src', '_data', 'translations', `${result}.json`);
+    const stopwordsPath = path.join(process.cwd(), 'src', '_data', 'stopwords', `${result}.json`);
     try {
         if (existsSync(translationsPath)) {
             unlinkSync(translationsPath);

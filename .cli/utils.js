@@ -2,20 +2,20 @@ import colors from 'yoctocolors';
 import * as path from 'path';
 import { readFileSync, rmSync, existsSync, readdirSync } from 'fs';
 
-export const LOCALES_PATH = path.join(process.cwd(), 'content', '_data', 'locales.json');
-export const SETTINGS_PATH = path.join(process.cwd(), 'content', '_data', 'settings.json');
-export const BLOGROLL_PATH = path.join(process.cwd(), 'content', '_data', 'blogroll.json');
+export const LOCALES_PATH = path.join(process.cwd(), 'src', '_data', 'locales.json');
+export const SETTINGS_PATH = path.join(process.cwd(), 'src', '_data', 'settings.json');
+export const BLOGROLL_PATH = path.join(process.cwd(), 'src', '_data', 'blogroll.json');
 export const PACKAGE_PATH = path.join(process.cwd(), 'package.json');
-export const THEMES_PATH = path.join(process.cwd(), 'themes');
-export const COLLECTIONS_PATH = path.join(process.cwd(), 'content', '_data', 'types.json');
+export const THEMES_PATH = path.join(process.cwd(), 'src', 'themes');
+export const COLLECTIONS_PATH = path.join(process.cwd(), 'src', '_data', 'types.json');
 export const COLLECTIONS_TEMPLATE_PATH = path.join(process.cwd(), '.cli', 'templates', 'collection.11tydata.js');
-export const TRANSLATIONS_DIR = path.join(process.cwd(), 'content', '_data', 'translations');
+export const TRANSLATIONS_DIR = path.join(process.cwd(), 'src', '_data', 'translations');
 
 export const getTemplatePartChoices = ({ type = 'all' } = {}) => {
     const settings = JSON.parse(readFileSync(SETTINGS_PATH, 'utf-8'));
     const theme = settings.theme || 'default';
-    const layoutsDir = path.join(process.cwd(), 'themes', theme, '_layouts');
-    const includesDir = path.join(process.cwd(), 'themes', theme, '_includes');
+    const layoutsDir = path.join(process.cwd(), 'src', 'themes', theme, '_layouts');
+    const includesDir = path.join(process.cwd(), 'src', 'themes', theme, '_includes');
 
     const choices = [];
 
@@ -79,10 +79,14 @@ export const handleExitError = (error) => {
     }
 }
 
+// Kept in step with the `clean` script in package.json. This used to regex `dir.output`
+// out of the Eleventy config as text, falling back to 'dist' when the pattern missed —
+// so a renamed config file, a moved `dir` block or a non-literal value would silently
+// delete the wrong directory, or the right one for the wrong reason. Deleting things is
+// the last place a silent fallback belongs.
+const OUTPUT_DIR = 'dist';
+
 export const clean = () => {
-    // because the output folder can be customised in 11ty, we need to check the value for our clean up script
-    const match = readFileSync('.eleventy.js', 'utf-8').match(/dir:\s*\{[^}]*output:\s*['"]([^'"]+)['"]/s);
-    const outputDir = match?.[1] ?? 'dist';
-    info(`Deleting ${outputDir} folder...`);
-    rmSync(outputDir, { recursive: true, force: true });
+    info(`Deleting ${OUTPUT_DIR} folder...`);
+    rmSync(OUTPUT_DIR, { recursive: true, force: true });
 }

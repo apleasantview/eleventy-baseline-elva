@@ -17,7 +17,7 @@
   "frontMatter.content.filters": ["contentFolders", "tags"],
   "frontMatter.snippets.wrapper.enabled": false,
   "frontMatter.content.publicFolder": {
-    "path": "content",
+    "path": "src",
     "relative": false
   },
   "frontMatter.extensibility.scripts": [

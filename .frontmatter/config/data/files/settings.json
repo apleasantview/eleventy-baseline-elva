@@ -2,7 +2,7 @@
     "$schema": "https://frontmatter.codes/config/data.files.schema.json",
     "id": "settings",
     "title": "Settings",
-    "file": "[[workspace]]/content/_data/settings.json",
+    "file": "[[workspace]]/src/_data/settings.json",
     "fileType": "json",
     "singleEntry": true,
     "schema": {
