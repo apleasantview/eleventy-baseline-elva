@@ -1,6 +1,7 @@
 ---
 title: Om
 slug: om
+translationKey: about
 tags: _search
 seo:
   description: Ett flerspråkigt, rent, grönt, 11ty starter theme. elva ger en solid grund för ditt nästa webbprojekt och ett inbyggt CMS för att hantera innehåll.

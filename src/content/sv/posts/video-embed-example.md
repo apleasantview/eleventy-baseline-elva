@@ -1,6 +1,7 @@
 ---
 title: Exempel på videoinbäddning
 slug: exempel-pa-videoinbaddning
+translationKey: video-embed-example
 date: 2023-08-01
 tags:
   - tag2

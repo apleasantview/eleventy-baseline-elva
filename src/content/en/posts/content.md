@@ -1,6 +1,7 @@
 ---
 title: Managing content
 slug: managing-content
+translationKey: content
 date: 2026-06-07
 tags:
   - tag2
@@ -61,4 +62,4 @@ elva is a little different to other starters here as thumbnails are generated du
 npm run cli content regenerate
 ```
 
-[Blogroll anyone](/documentation/blogroll/)?
+[Blogroll anyone](/documentation/create-a-blogroll/)?

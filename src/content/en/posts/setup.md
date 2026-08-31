@@ -1,6 +1,7 @@
 ---
 title: Setup
 slug: setup
+translationKey: setup
 date: 2026-06-11
 tags:
   - tag3
@@ -38,4 +39,4 @@ npm run cli setup delete-default-content
 
 Most settings can also be managed through Front Matter CMS without touching the command line or editing JSON files directly.
 
-Next up, lets configure some [languages](/documentation/adding-additional-languages/).
+Next up, lets configure some [languages](/documentation/managing-languages/).
