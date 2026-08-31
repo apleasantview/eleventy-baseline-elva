@@ -1,6 +1,7 @@
 ---
 title: Image embed example
 slug: image-embed-example
+translationKey: image-embed-example
 date: 2023-08-03
 tags:
   - tag2

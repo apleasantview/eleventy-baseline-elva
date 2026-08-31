@@ -1,6 +1,7 @@
 ---
 title: Om
 slug: om
+translationKey: about
 tags: _search
 seo:
   slug: om

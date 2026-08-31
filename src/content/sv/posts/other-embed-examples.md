@@ -1,6 +1,7 @@
 ---
 title: Andra inbäddningsexempel
 slug: andra-inbaddningsexempel
+translationKey: other-embed-examples
 date: 2023-07-31
 tags:
   - tag1

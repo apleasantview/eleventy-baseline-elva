@@ -1,6 +1,7 @@
 ---
 title: Managing collections
 slug: managing-collections
+translationKey: collections
 date: 2026-06-09
 tags:
   - tag1

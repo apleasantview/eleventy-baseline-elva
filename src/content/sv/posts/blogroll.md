@@ -1,6 +1,7 @@
 ---
 title: Skapa en blogglista
 slug: skapa-en-blogglista
+translationKey: blogroll
 date: 2026-06-06
 tags:
   - tag4
