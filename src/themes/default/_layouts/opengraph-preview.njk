@@ -28,10 +28,10 @@ seo:
 <html data-theme="dark">
 	<head>
         <!-- styles -->
-        {% css %}{% include '../themes/' + theme + '/css/reset.css' %}{% endcss -%}
-        {% css %}{% include '../themes/' + theme + '/css/variables.css' %}{% endcss -%}
-        {% css %}{% include '../themes/' + theme + '/css/styles.css' %}{% endcss -%}
-        {% css %}{% include '../themes/' + theme + '/css/opengraph.css' %}{% endcss -%}
+        {% css %}{% include './themes/' + theme + '/assets/css/reset.css' %}{% endcss -%}
+        {% css %}{% include './themes/' + theme + '/assets/css/variables.css' %}{% endcss -%}
+        {% css %}{% include './themes/' + theme + '/assets/css/styles.css' %}{% endcss -%}
+        {% css %}{% include './themes/' + theme + '/assets/css/opengraph.css' %}{% endcss -%}
 	    <style>{% getBundle 'css' %}</style>
 	</head>
 	<body class="opengraph-template" x-data="{ ogData: (function() { const p = new URLSearchParams(window.location.search); const j = p.get('fm'); try { return Object.assign({ title: '{{ title }}' }, JSON.parse(decodeURIComponent(j))) } catch(e) { return { title: '{{ title }}' } } })() }">

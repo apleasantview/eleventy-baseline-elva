@@ -60,7 +60,7 @@ export function svg(eleventyConfig) {
 	}
 
     eleventyConfig.addAsyncShortcode('svg', async function (filename, svgOptions = {}) {
-        const filePath = `./content/assets/svg/${filename}`;
+        const filePath = `./src/assets/svg/${filename}`;
         const engine = svgOptions.hasOwnProperty('engine') ? svgOptions.engine : 'html';
         const content = eleventyConfig.nunjucks.asyncShortcodes.renderFile(filePath, svgOptions, engine).then((content) => {
             return processSvg(content, svgOptions);

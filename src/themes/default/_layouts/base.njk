@@ -39,11 +39,11 @@
         <link rel="apple-touch-icon" href="{{ "/assets/img/icon-180.png" | htmlBaseUrl(settings.url) | cdnify }}">
 
         <!-- styles -->
-        {% css %}{% include '../css/reset.css' %}{% endcss -%}
-        {% css %}{% include '../css/variables.css' %}{% endcss -%}
-        {% css %}{% include '../css/styles.css' %}{% endcss -%}
-        {% css 'defer' %}{% include '../css/defer.css' %}{% endcss -%}
-        {% css 'defer' %}{% include '../css/components/syntax.css' %}{% endcss -%}
+        {% css %}{% include '../assets/css/reset.css' %}{% endcss -%}
+        {% css %}{% include '../assets/css/variables.css' %}{% endcss -%}
+        {% css %}{% include '../assets/css/styles.css' %}{% endcss -%}
+        {% css 'defer' %}{% include '../assets/css/defer.css' %}{% endcss -%}
+        {% css 'defer' %}{% include '../assets/css/components/syntax.css' %}{% endcss -%}
 	    <style>{% getBundle 'css' %}</style>
 	    <link rel="stylesheet" href="{% getBundleFileUrl 'css', 'defer' %}?v={% version %}" fetchpriority="low">
 
@@ -89,8 +89,8 @@
         {% include "footer.njk" %}
 
         <!-- scripts -->
-        {% js 'defer' %}{% include '../../../node_modules/alpinejs/dist/cdn.js' %}{% endjs -%}
-         {% js 'defer' %}{% include '../js/scripts.js' %}{% endjs -%}
+        {% js 'defer' %}{% include '../../../../node_modules/alpinejs/dist/cdn.js' %}{% endjs -%}
+         {% js 'defer' %}{% include '../assets/js/scripts.js' %}{% endjs -%}
         <script src="{% getBundleFileUrl 'js', 'defer' %}?v={% version %}" defer></script>
     </body>
 </html>

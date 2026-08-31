@@ -31,14 +31,14 @@ import pluginImageTransformConfig from './elva/config/images.js';
 import { autoImportFilters, autoImportPlugins } from './elva/utils/autoimport.js';
 
 // Languages
-import locales from './content/_data/locales.json' with { type: 'json' }
+import locales from './src/_data/locales.json' with { type: 'json' }
 const defaultLanguage = Object.keys(locales).find(key => locales[key].default);
 
 // Settings
-import settings from './content/_data/settings.json' with { type: 'json' }
+import settings from './src/_data/settings.json' with { type: 'json' }
 
 // Collections
-const collections = await import('./content/_data/types.json', { with: { type: 'json' } });
+const collections = await import('./src/_data/types.json', { with: { type: 'json' } });
 
 // 11ty -----------------------------------------------
 
@@ -47,7 +47,7 @@ export default async function(eleventyConfig) {
     // Global Settings --------------------------------
 
     eleventyConfig.addGlobalData('settings', {
-        // these get merged with content/_data/settings.js
+        // these get merged with src/_data/settings.json
         url: process.env.URL || process.env.CF_PAGES_URL || 'http://localhost:8080',
         isProduction: process.env.ELEVENTY_ENV === 'production',
         isStaging: (process.env.URL && process.env.URL.includes('github.io')) || (process.env.CF_PAGES_BRANCH && process.env.CF_PAGES_BRANCH !== 'main') || (process.env.ELEVENTY_ENV === 'staging') || false,
@@ -58,16 +58,16 @@ export default async function(eleventyConfig) {
     // Watch Targets ----------------------------------
 
     eleventyConfig.setUseGitIgnore(false);
-    eleventyConfig.addWatchTarget('./content/assets');
-    eleventyConfig.addWatchTarget('./themes/**/*.{css,js}');
+    eleventyConfig.addWatchTarget('./src/assets');
+    eleventyConfig.addWatchTarget('./src/themes/**/*.{css,js}');
     eleventyConfig.addWatchTarget('./elva/templates/*', { resetConfig: true });
-    eleventyConfig.addWatchTarget(`./themes/${eleventyConfig.globalData.settings.theme}/_layouts/opengraph-preview.njk`, { resetConfig: true });
+    eleventyConfig.addWatchTarget(`./src/themes/${eleventyConfig.globalData.settings.theme}/_layouts/opengraph-preview.njk`, { resetConfig: true });
 
     // Virtual Templates ------------------------------
 
     // development only open graph template
     if (process.env.ELEVENTY_RUN_MODE && process.env.ELEVENTY_RUN_MODE !== 'build') {
-        const ogPreviewTemplate = fs.readFileSync(path.resolve(`themes/${eleventyConfig.globalData.settings.theme}/_layouts/`, 'opengraph-preview.njk'), 'utf-8');
+        const ogPreviewTemplate = fs.readFileSync(path.resolve(`src/themes/${eleventyConfig.globalData.settings.theme}/_layouts/`, 'opengraph-preview.njk'), 'utf-8');
         eleventyConfig.addTemplate('opengraph-preview.njk', ogPreviewTemplate, { theme: eleventyConfig.globalData.settings.theme });
     }
 
@@ -139,11 +139,10 @@ export default async function(eleventyConfig) {
 
     // Passthrough -------------------------------------
 
-    eleventyConfig.addPassthroughCopy({'./content/assets/img/favicon.ico': './favicon.ico'});
-    eleventyConfig.addPassthroughCopy({'./content/assets/img': './assets/img'});
-    eleventyConfig.addPassthroughCopy({'./content/assets/svg': './assets/svg'});
-    eleventyConfig.addPassthroughCopy({[`./themes/${eleventyConfig.globalData.settings.theme}/fonts`]: './assets/fonts'});
-    eleventyConfig.addPassthroughCopy({'./content/assets/files': './assets/files'});
+    eleventyConfig.addPassthroughCopy({'./src/assets/img/favicon.ico': './favicon.ico'});
+    eleventyConfig.addPassthroughCopy({'./src/assets/img': './assets/img'});
+    eleventyConfig.addPassthroughCopy({'./src/assets/svg': './assets/svg'});
+    eleventyConfig.addPassthroughCopy({[`./src/themes/${eleventyConfig.globalData.settings.theme}/fonts`]: './assets/fonts'});
 
     // Markdown ----------------------------------------
 
@@ -177,11 +176,11 @@ export default async function(eleventyConfig) {
         pathPrefix: '/',
 
         dir: {
-            input: 'content',
+            input: 'src',
             output: 'dist',
             data: '_data',
-            includes: `../themes/${eleventyConfig.globalData.settings.theme}/_includes`,
-            layouts: `../themes/${eleventyConfig.globalData.settings.theme}/_layouts`
+            includes: `themes/${eleventyConfig.globalData.settings.theme}/_includes`,
+            layouts: `themes/${eleventyConfig.globalData.settings.theme}/_layouts`
         }
     }
 }
