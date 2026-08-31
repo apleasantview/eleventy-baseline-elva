@@ -1,6 +1,7 @@
 ---
 title: Hantering samlingar
 slug: samlingar
+translationKey: collections
 date: 2026-06-09
 tags:
   - tag1

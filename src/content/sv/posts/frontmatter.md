@@ -1,6 +1,7 @@
 ---
 title: Front matter
 slug: front-matter
+translationKey: frontmatter
 date: 2026-06-04
 tags:
   - tag4

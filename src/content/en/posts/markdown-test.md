@@ -1,6 +1,7 @@
 ---
 title: Markdown test
 slug: markdown-test
+translationKey: markdown-test
 date: 2026-06-05
 tags:
   - tag4

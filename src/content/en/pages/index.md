@@ -1,6 +1,7 @@
 ---
 title: Home
 slug: home
+translationKey: home
 layout: home
 tags: _home
 seo:

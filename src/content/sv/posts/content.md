@@ -1,6 +1,7 @@
 ---
 title: Hantera innehåll
 slug: innehall
+translationKey: content
 date: 2026-06-07
 tags:
   - tag2

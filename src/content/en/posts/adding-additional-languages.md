@@ -1,6 +1,7 @@
 ---
 title: Managing languages
 slug: managing-languages
+translationKey: adding-additional-languages
 date: 2026-06-10
 tags:
   - tag2

@@ -1,6 +1,7 @@
 ---
 title: Managing translations
 slug: managing-translations
+translationKey: translations
 date: 2026-06-08
 tags:
   - tag1

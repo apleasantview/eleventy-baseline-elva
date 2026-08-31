@@ -1,6 +1,7 @@
 ---
 title: Hem
 slug: hem
+translationKey: home
 layout: home
 tags: _home
 seo:

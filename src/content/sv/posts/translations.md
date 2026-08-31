@@ -1,6 +1,7 @@
 ---
 title: Hantera översättningar
 slug: oversattningar
+translationKey: translations
 date: 2026-06-08
 tags:
   - tag1
