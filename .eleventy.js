@@ -100,8 +100,12 @@ export default async function(eleventyConfig) {
             const feedJsonTemplate = fs.readFileSync(path.resolve('elva/templates/', 'feed.json.njk'), 'utf-8');
             
             const feedSlug = collectionName === 'posts' ? 'feed' : collectionName;
-            eleventyConfig.addTemplate(key + '-' + collectionName + '-feed.xml.njk', feedXmlTemplate, { lang: key, collectionName, collectionTag: `_${collectionName}`, label: config.label, feedSlug });
-            eleventyConfig.addTemplate(key + '-' + collectionName + '-feed.json.njk', feedJsonTemplate, { lang: key, collectionName, collectionTag: `_${collectionName}`, label: config.label, feedSlug });
+            // eleventyImport is how Eleventy learns this template consumes that collection.
+            // Without it the feed can render before the posts do, and reading
+            // post.templateContent throws TemplateContentPrematureUseError.
+            const feedData = { lang: key, collectionName, collectionTag: `_${collectionName}`, eleventyImport: { collections: [`_${collectionName}`] }, label: config.label, feedSlug };
+            eleventyConfig.addTemplate(key + '-' + collectionName + '-feed.xml.njk', feedXmlTemplate, feedData);
+            eleventyConfig.addTemplate(key + '-' + collectionName + '-feed.json.njk', feedJsonTemplate, feedData);
         }
     }
     
