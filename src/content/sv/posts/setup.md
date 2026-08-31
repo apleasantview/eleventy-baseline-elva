@@ -1,6 +1,7 @@
 ---
 title: Inställningar
 slug: installningar
+translationKey: setup
 date: 2026-06-11
 tags:
   - tag3

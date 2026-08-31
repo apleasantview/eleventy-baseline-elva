@@ -1,6 +1,7 @@
 ---
 title: Managing content
 slug: managing-content
+translationKey: content
 date: 2026-06-07
 tags:
   - tag2

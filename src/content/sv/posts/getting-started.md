@@ -1,6 +1,7 @@
 ---
 title: Komma igång
 slug: komma-igang
+translationKey: getting-started
 date: 2026-06-12
 tags:
   - tag1

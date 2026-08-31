@@ -1,6 +1,7 @@
 ---
 title: Språkhantering
 slug: sprakhantering
+translationKey: adding-additional-languages
 date: 2026-06-10
 tags:
   - tag2
