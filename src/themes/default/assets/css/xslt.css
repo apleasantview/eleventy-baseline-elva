@@ -1,6 +1,10 @@
-{% include './reset.css' %}
-{% include './variables.css' %}
-{% include './styles.css' %}
+/* @import, not {% include %}. These were Nunjucks includes, which only ever resolved because
+   the file was pulled in through a {% css %} bundle block and rendered as a template first.
+   inlinePostCSS reads from disk, so the tags would have reached PostCSS verbatim. Same shape
+   as inline-bundle.css. */
+@import './reset.css';
+@import './variables.css';
+@import './styles.css';
 
 .rss-xslt h1 {
     margin-top: var(--space-s-l);

@@ -2,7 +2,8 @@
 
 // Imports --------------------------------------------
 
-import { EleventyI18nPlugin, EleventyHtmlBasePlugin, EleventyRenderPlugin, IdAttributePlugin } from '@11ty/eleventy';
+import { EleventyI18nPlugin, EleventyRenderPlugin, IdAttributePlugin } from '@11ty/eleventy';
+import baseline, { config as baselineConfig } from '@apleasantview/eleventy-plugin-baseline';
 import { eleventyImageTransformPlugin } from '@11ty/eleventy-img';
 import eleventyNavigationPlugin from "@11ty/eleventy-navigation";
 import fs from 'fs';
@@ -32,12 +33,12 @@ import { autoImportFilters, autoImportPlugins } from './elva/utils/autoimport.js
 
 // Languages
 import locales from './src/_data/locales.json' with { type: 'json' }
-const defaultLanguage = Object.keys(locales).find(key => locales[key].default);
 
 // Settings
 // _elva.js holds what the starter reads; settings.js holds Baseline's contract and is
 // imported by the plugin registration rather than here. D9.
 import elva from './src/_data/_elva.js';
+import settings from './src/_data/settings.js';
 
 // Collections
 const collections = await import('./src/_data/types.json', { with: { type: 'json' } });
@@ -45,12 +46,18 @@ const collections = await import('./src/_data/types.json', { with: { type: 'json
 // 11ty -----------------------------------------------
 
 export default async function(eleventyConfig) {
+    await eleventyConfig.addPlugin(baseline(settings, {
+        navigator: true,
+        verbose: true,
+        multilingual: true,
+        // elva composes titles with a bullet.
+        head: { titleSeparator: ' • ' }
+    }));
 
     // Watch Targets ----------------------------------
 
     eleventyConfig.setUseGitIgnore(false);
     eleventyConfig.addWatchTarget('./src/assets');
-    eleventyConfig.addWatchTarget('./src/themes/**/*.{css,js}');
     eleventyConfig.addWatchTarget('./elva/templates/*', { resetConfig: true });
     eleventyConfig.addWatchTarget(`./src/themes/${elva.theme}/_layouts/opengraph-preview.njk`, { resetConfig: true });
 
@@ -63,14 +70,8 @@ export default async function(eleventyConfig) {
     }
 
     const robotsTemplate = fs.readFileSync(path.resolve('elva/templates/', 'robots.njk'), 'utf-8');
-    const sitemapTemplate = fs.readFileSync(path.resolve('elva/templates/', 'sitemap.njk'), 'utf-8');
-    const sitemapIndexTemplate = fs.readFileSync(path.resolve('elva/templates/', 'sitemap-index.njk'), 'utf-8');
 
     eleventyConfig.addTemplate('robots.njk', robotsTemplate);
-    // with more than one language, generate a sitemap-index.xml
-    if (Object.keys(locales).length > 1) {
-        eleventyConfig.addTemplate('sitemap-index.njk', sitemapIndexTemplate);
-    }
 
     const manifestTemplate = fs.readFileSync(path.resolve('elva/templates/', 'manifest.njk'), 'utf-8');
     const blogrollXMLTemplate = fs.readFileSync(path.resolve('elva/templates/', 'blogroll.xml.njk'), 'utf-8');
@@ -78,11 +79,10 @@ export default async function(eleventyConfig) {
     const feedXslTemplate = fs.readFileSync(path.resolve('elva/templates/', 'feed.xsl.njk'), 'utf-8');
 
     for (let [key, locale] of Object.entries(locales)) {
-        eleventyConfig.addTemplate(key + '-sitemap.njk', sitemapTemplate, { lang: key });
-        eleventyConfig.addTemplate(key + '-manifest.njk', manifestTemplate, { lang: key });
-        eleventyConfig.addTemplate(key + '-blogroll.xml.njk', blogrollXMLTemplate, { lang: key });
-        eleventyConfig.addTemplate(key + '-search-api.json.njk', searchApiTemplate, { lang: key, collection: '_search' });
-        eleventyConfig.addTemplate(key + '-feed.xsl.njk', feedXslTemplate, { lang: key });
+        eleventyConfig.addTemplate(key + '-manifest.njk', manifestTemplate, { lang: key, _internal: true });
+        eleventyConfig.addTemplate(key + '-blogroll.xml.njk', blogrollXMLTemplate, { lang: key, _internal: true });
+        eleventyConfig.addTemplate(key + '-search-api.json.njk', searchApiTemplate, { lang: key, collection: '_search', _internal: true });
+        eleventyConfig.addTemplate(key + '-feed.xsl.njk', feedXslTemplate, { lang: key, _internal: true });
 
         for (let [collectionName, config] of Object.entries(collections.default)) {
             if (!config.feed) continue;
@@ -95,22 +95,25 @@ export default async function(eleventyConfig) {
             // Without it the feed can render before the posts do, and reading
             // post.templateContent throws TemplateContentPrematureUseError.
             const feedData = { lang: key, collectionName, collectionTag: `_${collectionName}`, eleventyImport: { collections: [`_${collectionName}`] }, label: config.label, feedSlug };
-            eleventyConfig.addTemplate(key + '-' + collectionName + '-feed.xml.njk', feedXmlTemplate, feedData);
-            eleventyConfig.addTemplate(key + '-' + collectionName + '-feed.json.njk', feedJsonTemplate, feedData);
+            eleventyConfig.addTemplate(key + '-' + collectionName + '-feed.xml.njk', feedXmlTemplate, {...feedData, _internal: true});
+            eleventyConfig.addTemplate(key + '-' + collectionName + '-feed.json.njk', feedJsonTemplate, {...feedData, _internal: true});
         }
     }
     
     // Plugins ----------------------------------------
 
     await autoImportPlugins(eleventyConfig);
-    await eleventyConfig.addPlugin(pluginRSS);
-    eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
+    await eleventyConfig.addPlugin(pluginRSS, {
+        htmlBasePluginOptions: { baseHref: settings.url }
+    });
     eleventyConfig.addPlugin(EleventyRenderPlugin);
-    eleventyConfig.addPlugin(EleventyI18nPlugin, { defaultLanguage: defaultLanguage, errorMode: 'never'});
+    eleventyConfig.addPlugin(EleventyI18nPlugin, { defaultLanguage: settings.defaultLanguage, errorMode: 'never'});
     eleventyConfig.addPlugin(IdAttributePlugin);
     eleventyConfig.addPlugin(pluginSyntaxHighlight);
     eleventyConfig.addPlugin(pluginEmbedEverything, pluginEmbedEverythingConfig);
-    eleventyConfig.addPlugin(eleventyImageTransformPlugin, pluginImageTransformConfig(eleventyConfig));
+    if (process.env.BASELINE_PREPASS_ACTIVE !== '1') {
+        eleventyConfig.addPlugin(eleventyImageTransformPlugin, pluginImageTransformConfig(eleventyConfig));
+	}
     eleventyConfig.addPlugin(eleventyNavigationPlugin);
 
     // Transforms -------------------------------------
@@ -157,21 +160,16 @@ export default async function(eleventyConfig) {
     // 11ty Settings -----------------------------------
 
     eleventyConfig.logger.message(`Theme: ${elva.theme}`);
-
-    return {
-        markdownTemplateEngine: 'njk',
-        htmlTemplateEngine: 'njk',
-        dataTemplateEngine: 'njk',
-    
-        // If your site deploys to a subdirectory, change `pathPrefix`
-        pathPrefix: '/',
-
-        dir: {
-            input: 'src',
-            output: 'dist',
-            data: '_data',
-            includes: `themes/${elva.theme}/_includes`,
-            layouts: `themes/${elva.theme}/_layouts`
-        }
-    }
 }
+
+export const config = {
+	...baselineConfig,
+    // If your site deploys to a subdirectory, change `pathPrefix`
+    pathPrefix: '/',
+	dir: {
+		...baselineConfig.dir,
+		includes: `themes/${elva.theme}/_includes`,
+		layouts: `themes/${elva.theme}/_layouts`,
+		assets: `themes/${elva.theme}/assets`
+	}
+};

@@ -28,11 +28,7 @@ seo:
 <html data-theme="dark">
 	<head>
         <!-- styles -->
-        {% css %}{% include './themes/' + theme + '/assets/css/reset.css' %}{% endcss -%}
-        {% css %}{% include './themes/' + theme + '/assets/css/variables.css' %}{% endcss -%}
-        {% css %}{% include './themes/' + theme + '/assets/css/styles.css' %}{% endcss -%}
-        {% css %}{% include './themes/' + theme + '/assets/css/opengraph.css' %}{% endcss -%}
-	    <style>{% getBundle 'css' %}</style>
+
 	</head>
 	<body class="opengraph-template" x-data="{ ogData: (function() { const p = new URLSearchParams(window.location.search); const j = p.get('fm'); try { return Object.assign({ title: '{{ title }}' }, JSON.parse(decodeURIComponent(j))) } catch(e) { return { title: '{{ title }}' } } })() }">
         <div style="max-height: 100px;">
@@ -55,7 +51,7 @@ seo:
         </h1>
 
         <!-- scripts -->
-        {% js 'defer' %}{% include '../node_modules/alpinejs/dist/cdn.js' %}{% endjs -%}
-        <script src="{% getBundleFileUrl 'js', 'defer' %}?v={% version %}" defer></script>
+        {% set jsDeferredPath = _baseline.paths.assets ~ "js/deferred.js" %}
+        <script defer>{{ jsDeferredPath | inlineESbuild({ minify: true, target: "es2020" }) | replace("<script>", "") | replace("</script>", "") | safe }}</script>
 	</body>
 </html>

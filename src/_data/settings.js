@@ -24,8 +24,8 @@ const defaultLanguage = Object.keys(locales).find((key) => locales[key].default)
 //   contentDir    where this language's content lives. Baseline never reads it; it is a
 //                 documented convention, so that a switcher — or anything else needing to
 //                 find a language's content — has one place to ask. Worth having here
-//                 because elva infers the same fact in three places (the permalink rule,
-//                 the CLI, Front Matter), and this is the only one that states it.
+//                 because elva infers the same fact in two places (the permalink rule and
+//                 the CLI), and this is the only one that states it.
 //                 Trailing slash and key order follow the multilingual tutorial.
 const languages = Object.fromEntries(
 	Object.entries(locales).map(([lang, locale]) => {
@@ -47,12 +47,33 @@ const languages = Object.fromEntries(
 
 export default {
 	title: languages[defaultLanguage]?.title,
+	tagline: 'A site built with Baseline and Elva',
 	description: languages[defaultLanguage]?.description,
 
 	// Must be an absolute http(s) origin. Without it there are no canonicals, no Open Graph and
 	// no structured data.
 	url: process.env.URL || process.env.CF_PAGES_URL || 'http://localhost:8080',
 
+	// Site-wide noindex, the equivalent of elva's `_elva.isStaging` branch in base.njk.
+	noindex: process.env.ELEVENTY_ENV === 'staging',
+
 	defaultLanguage,
-	languages
+	languages,
+
+	head: {
+		link: [{ rel: 'stylesheet', href: '/themes/default/assets/css/index.css' }],
+		script: [
+			{content: "document.documentElement.dataset.theme = localStorage.getItem('theme') === null ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' : localStorage.getItem('theme')"},
+			{ src: '/themes/default/assets/js/index.js', defer: '' }
+		],
+		meta: [],
+		style: []
+	},
+
+	seo: {
+		preserveQueryParams: false,
+		ogImage: '',
+		openGraph: {},
+		twitter: {}
+	}
 };

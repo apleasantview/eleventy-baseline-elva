@@ -1,7 +1,8 @@
-{% css 'defer' %}{% include '../assets/css/components/search.css' %}{% endcss -%}
-{% js 'defer' %}{% include '../assets/js/search.js' %}{% endjs -%}
 
-<div x-data="search()" class="search-component">
+
+{# search.js is bundled by esbuild via assets/js/index.js, not included here. The API URL is
+   passed in from the template because that is the only place `locale_url` can run. #}
+<div x-data="search('{{ '/api/search.json' | locale_url }}')" class="search-component">
     <form class="search-form" role="search" x-cloak x-show="loaded">
         <input
             type="search"

@@ -1,83 +1,61 @@
 <!DOCTYPE html>
 <html lang="{{ locales[page.lang].locale or page.lang }}" dir="{{ locales[page.lang].dir or 'ltr' }}" x-data :data-theme="$store.elva.theme">
-    <head>
-        {%- set t = ((seo.title or title) + ' ' + _elva.meta.separator + ' ' + ('meta.title' | translate) if (seo.title or title) else ('meta.title' | translate)) %}
-        {%- set d = (seo.description | striptags | truncate(140, false, '…')) or ('meta.description' | translate) %}
-        {%- set u = page.url | htmlBaseUrl(settings.url) %}
-        {%- set i = (thumbnail or _elva.meta.opengraphDefaultImage) | htmlBaseUrl(settings.url) %}
-        {%- set ia = thumbnailDescription or ('meta.opengraphDefaultAlt' | translate) %}
-        {%- set ta = tags or [] %}
+    <baseline-head></baseline-head>
+    {# `t`and `u` are gone with the tags that consumed them: Baseline composes the title
+       (head.titleSeparator + per-page titleTemplate), the description, the canonical and the
+       hreflang set. What remains below is the half Baseline emits nothing for. #}
+    {%- set d = (seo.description | striptags | truncate(140, false, '…')) or ('meta.description' | translate) %}
+    {%- set i = (thumbnail or _elva.meta.opengraphDefaultImage) | htmlBaseUrl(settings.url) %}
+    {%- set ia = thumbnailDescription or ('meta.opengraphDefaultAlt' | translate) %}
+    {%- set ta = tags or [] %}
 
-        <!-- charset / viewport -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="text-scale" content="scale">
+    <!-- charset / viewport -->
+    <meta name="text-scale" content="scale">
 
-        <!-- title / description -->
-        <title>{{ t }}</title>
-		<meta name="description" content="{{ d }}">
+    <!-- title / description -->
+    <meta name="description" content="{{ d }}">
 
-        <!-- canonical / alternates -->
-        <link rel="canonical" href="{{ u }}">
-        <link rel="alternate" hreflang="{{ page.lang }}" href="{{ u }}">
-        {# htmlBaseUrl, not string concatenation. #}
-        {% for link in page.url | locale_links | fixlocalelinks %}<link rel="alternate" hreflang="{{ link.lang }}" href="{{ link.url | htmlBaseUrl(settings.url) }}">{% endfor %}
+    <!-- open graph: only what Baseline does not emit. -->
+    <meta property="og:description" content="{{ d }}">
+    <meta property="og:logo" content="{{ "/assets/img/icon-192.png" | htmlBaseUrl(settings.url) | cdnify }}">
+    <meta property="og:image" content="{{ i | cdnify }}">
+    <meta property="og:image:alt" content="{{ ia }}">
 
-        <!-- open graph -->
-        <meta property="og:site_name" content="{{ 'meta.title' | translate }}">
-        <meta property="og:title" content="{{ t }}">
-        <meta property="og:description" content="{{ d }}">
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="{{ u }}">
-        <meta property="og:logo" content="{{ "/assets/img/icon-192.png" | htmlBaseUrl(settings.url) | cdnify }}">
-        <meta property="og:image" content="{{ i | cdnify }}">
-        <meta property="og:image:alt" content="{{ ia }}">
-        <meta property="og:locale" content="{{ locales[page.lang].locale or page.lang }}">
+    <!-- icons -->
+    <link rel="icon" href="{{ "/favicon.ico" | htmlBaseUrl(settings.url) }}" sizes="any">
+    <link rel="icon" href="{{ "/assets/img/icon.svg" | htmlBaseUrl(settings.url) }}" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{{ "/assets/img/icon-180.png" | htmlBaseUrl(settings.url) | cdnify }}">
 
-        <!-- icons -->
-        <link rel="icon" href="{{ "/favicon.ico" | htmlBaseUrl(settings.url) }}" sizes="any">
-        <link rel="icon" href="{{ "/assets/img/icon.svg" | htmlBaseUrl(settings.url) }}" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="{{ "/assets/img/icon-180.png" | htmlBaseUrl(settings.url) | cdnify }}">
+    <!-- styles -->
+    {% set cssInlineBundlePath = _baseline.paths.assets ~ 'css/inline-bundle.css' %}
+    {{ cssInlineBundlePath | inlinePostCSS | safe }}
 
-        <!-- styles -->
-        {% css %}{% include '../assets/css/reset.css' %}{% endcss -%}
-        {% css %}{% include '../assets/css/variables.css' %}{% endcss -%}
-        {% css %}{% include '../assets/css/styles.css' %}{% endcss -%}
-        {% css 'defer' %}{% include '../assets/css/defer.css' %}{% endcss -%}
-        {% css 'defer' %}{% include '../assets/css/components/syntax.css' %}{% endcss -%}
-	    <style>{% getBundle 'css' %}</style>
-	    <link rel="stylesheet" href="{% getBundleFileUrl 'css', 'defer' %}?v={% version %}" fetchpriority="low">
+    <!-- feeds -->
+    {%- for collectionName, config in types %}
+    {%- if config.feed %}
+    {%- set feedSlug = 'feed' if collectionName == 'posts' else collectionName %}
+    <link rel="alternate" href="{{ ('/feed/' + feedSlug + '.xml') | locale_url | htmlBaseUrl(settings.url) }}" type="application/atom+xml" title="{{ config.label }} {{ _elva.meta.separator }} {{ 'meta.rssTitle' | translate }} {{ _elva.meta.separator }} {{ 'meta.title' | translate }}">
+    <link rel="alternate" href="{{ ('/feed/' + feedSlug + '.json') | locale_url | htmlBaseUrl(settings.url) }}" type="application/json" title="{{ config.label }} {{ _elva.meta.separator }} {{ 'meta.jsonTitle' | translate }} {{ _elva.meta.separator }} {{ 'meta.title' | translate }}">
+    {%- endif %}
+    {%- endfor %}
+    {% if blogroll | length %}<link rel="blogroll"  href="{{ "/feed/blogroll.xml" | locale_url | htmlBaseUrl(settings.url) }}" type="text/xml" title="{{ 'meta.blogrollTitle' | translate }} {{ _elva.meta.separator }} {{ 'meta.title' | translate }}">{% endif %}
 
-        <!-- feeds -->
-        {%- for collectionName, config in types %}
-        {%- if config.feed %}
-        {%- set feedSlug = 'feed' if collectionName == 'posts' else collectionName %}
-        <link rel="alternate" href="{{ ('/feed/' + feedSlug + '.xml') | locale_url | htmlBaseUrl(settings.url) }}" type="application/atom+xml" title="{{ config.label }} {{ _elva.meta.separator }} {{ 'meta.rssTitle' | translate }} {{ _elva.meta.separator }} {{ 'meta.title' | translate }}">
-        <link rel="alternate" href="{{ ('/feed/' + feedSlug + '.json') | locale_url | htmlBaseUrl(settings.url) }}" type="application/json" title="{{ config.label }} {{ _elva.meta.separator }} {{ 'meta.jsonTitle' | translate }} {{ _elva.meta.separator }} {{ 'meta.title' | translate }}">
-        {%- endif %}
-        {%- endfor %}
-        {% if blogroll | length %}<link rel="blogroll"  href="{{ "/feed/blogroll.xml" | locale_url | htmlBaseUrl(settings.url) }}" type="text/xml" title="{{ 'meta.blogrollTitle' | translate }} {{ _elva.meta.separator }} {{ 'meta.title' | translate }}">{% endif %}
+    <!-- preload / prefetch -->
+    {% if (_elva.isProduction or _elva.isStaging) and _elva.cdn %}<link rel="dns-prefetch" href="https://i0.wp.com/">{% endif %}
 
-        <!-- preload / prefetch -->
-        {% if (_elva.isProduction or _elva.isStaging) and _elva.cdn %}<link rel="dns-prefetch" href="https://i0.wp.com/">{% endif %}
+    <!-- everything else -->
+    <meta name="generator" content="{{ eleventy.generator }}">
+    <link rel="manifest" href="{{ "/site.webmanifest" | locale_url | htmlBaseUrl(settings.url) }}">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="{{ _elva.themeColorLight }}">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="{{ _elva.themeColorDark }}">
+    {% if _elva.isStaging or seo.noIndex %}<meta name="robots" content="noindex, nofollow">{% endif %}
+    {% if _elva.author.githubProfile %}<link rel="me" href="{{ _elva.author.githubProfile }}">{% endif %}
+    {% if _elva.author.fediverseProfile %}<link rel="me" href="{{ _elva.author.fediverseProfile }}">{% endif %}
+    {% if _elva.author.fediverseUsername %}<meta name="fediverse:creator" content="{{ _elva.author.fediverseUsername }}">{% endif %}
 
-        <!-- everything else -->
-        <meta name="generator" content="{{ eleventy.generator }}">
-        <link rel="manifest" href="{{ "/site.webmanifest" | locale_url | htmlBaseUrl(settings.url) }}">
-        <meta name="color-scheme" content="light dark">
-        <meta name="theme-color" media="(prefers-color-scheme: light)" content="{{ _elva.themeColorLight }}">
-        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="{{ _elva.themeColorDark }}">
-        {% if _elva.isStaging or seo.noIndex %}<meta name="robots" content="noindex, nofollow">{% endif %}
-        {% if _elva.author.githubProfile %}<link rel="me" href="{{ _elva.author.githubProfile }}">{% endif %}
-        {% if _elva.author.fediverseProfile %}<link rel="me" href="{{ _elva.author.fediverseProfile }}">{% endif %}
-        {% if _elva.author.fediverseUsername %}<meta name="fediverse:creator" content="{{ _elva.author.fediverseUsername }}">{% endif %}
-
-        <!-- set theme before page renders to stop fouc -->
-        {% js %}document.documentElement.dataset.theme = localStorage.getItem('theme') === null ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' : localStorage.getItem('theme'){% endjs %}
-        
-        <!-- inline scripts -->
-        <script>{% getBundle 'js' %}</script>
-    </head>
+    <!-- set theme before page renders to stop fouc -->
+    <!-- inline scripts -->
 
     <body class="{% set space = joiner(" ") -%}{% for tag in ta -%}{{ space() }}{{ tag | slugify }}{% endfor -%}">
         <!-- header -->
@@ -89,9 +67,6 @@
         <!-- footer -->
         {% include "footer.njk" %}
 
-        <!-- scripts -->
-        {% js 'defer' %}{% include '../../../../node_modules/alpinejs/dist/cdn.js' %}{% endjs -%}
-         {% js 'defer' %}{% include '../assets/js/scripts.js' %}{% endjs -%}
-        <script src="{% getBundleFileUrl 'js', 'defer' %}?v={% version %}" defer></script>
+        <!-- scripts: declared in settings.head.script, emitted by <baseline-head> -->
     </body>
 </html>

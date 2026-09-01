@@ -1,11 +1,17 @@
 document.addEventListener('alpine:init', () => {
-    Alpine.data('search', () => ({
+    // apiURL arrives from the markup: `x-data="search('…')"` in search.njk. It used to be
+    // `'{{ "/api/search.json" | locale_url }}'` right here, which worked only because
+    // `{% js %}{% include %}` renders the file through Nunjucks first. esbuild reads from disk
+    // and renders nothing, and the literal is valid JavaScript inside a string — so the bundle
+    // would have built clean and fetched a URL called `{{ "/api/search.json" | locale_url }}`.
+    // Rendering the URL in the template is also what keeps pathPrefix reaching it.
+    Alpine.data('search', (apiURL) => ({
         query: '',
         results: [],
         allResults: [],
         activeIndex: -1,
         loaded: false,
-        apiURL: '{{ "/api/search.json" | locale_url }}',
+        apiURL,
         async init() {
             const params = new URLSearchParams(window.location.search);
             const q = params.get('q');

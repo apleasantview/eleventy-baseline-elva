@@ -1,27 +1,41 @@
 ---js
-{
-  layout: 'tag',
-  pagination: {
-    data: 'collections',
-    size: 1,
-    alias: 'tag',
-    addAllPagesToCollections: true,
-    before: function(paginationData, fullData) {
-      return paginationData.filter(collectionTag => {
-        let taggedInLanguage = fullData.collections[collectionTag].filter(item => item.page.lang === fullData.lang);
-        return taggedInLanguage.length > 0 && !collectionTag.startsWith('_');
-      });
-    }
-  },
-  eleventyComputed: {
-    title: "{{ 'tags.tagged' | translate }} “{{ tag }}”",
-    permalink: "{{ ('/' + lang + '/tag/' + (tag | slugify) + '/') | defaultlocaleurl }}",
-    tags: function(data) { return ['tag', `tag-${this.slugify(data.tag)}`]; },
-    seo: {
-      changeFrequency: 'weekly',
-      sitemapPriority: '0.3',
-      description: "{{ 'tags.description' | translate }} “{{ tag }}“."
-    }
+const layout = 'tag';
+
+const pagination = {
+  data: 'collections',
+  size: 1,
+  alias: 'tag',
+  addAllPagesToCollections: true,
+  // A tag is a collection that is an array of pages, is not internal, and has at least one
+  // page in this language. The array check matters: `collections` is a shared namespace and
+  // a plugin may register a non-array collection in it — Baseline's `translationsMap` is a
+  // map keyed by translationKey, and calling .filter() on it throws. Cheapest correct order:
+  // reject by name, then by shape, then by content.
+  before: function (paginationData, fullData) {
+    return paginationData.filter((collectionTag) => {
+      if (collectionTag.startsWith('_')) return false;
+      const items = fullData.collections[collectionTag];
+      if (!Array.isArray(items)) return false;
+      return items.some((item) => item.page.lang === fullData.lang);
+    });
   }
-}
+};
+
+const eleventyComputed = {
+  // Pagination generates one page per tag from one source file, so every page inherits this
+  // front matter — including the absent slug, which falls back to page.fileSlug ('tags') for
+  // all of them. Baseline registers entry.slug into the wikilink index and throws on a
+  // collision (slug-index.js:47), so the second tag page stops the build. Both sibling
+  // integrations hit this and both solved it the same way: a function returning the raw tag,
+  // which Baseline then slugifies.
+  slug: (data) => data.tag,
+  title: "{{ 'tags.tagged' | translate }} “{{ tag }}”",
+  permalink: "{{ ('/' + lang + '/tag/' + (tag | slugify) + '/') | defaultlocaleurl }}",
+  tags: function (data) { return ['tag', `tag-${this.slugify(data.tag)}`]; },
+  seo: {
+    changeFrequency: 'weekly',
+    sitemapPriority: '0.3',
+    description: "{{ 'tags.description' | translate }} “{{ tag }}“."
+  }
+};
 ---

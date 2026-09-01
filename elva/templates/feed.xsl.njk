@@ -13,8 +13,7 @@ seo:
 		<head>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			<title><xsl:value-of select="/atom:feed/atom:title"/></title>
-			{% css 'xslt' %}{% include './themes/' + _elva.theme + '/assets/css/xslt.css' %}{% endcss -%}
-			<link rel="stylesheet" href="{% getBundleFileUrl 'css', 'xslt' %}?v={% version %}"/>
+			<style><![CDATA[{{ (_baseline.paths.assets ~ 'css/xslt.css') | inlinePostCSS | replace("<style>", "") | replace("</style>", "") | safe }}]]></style>
 		</head>
 		<body class="rss-xslt">
 			<main id="content">

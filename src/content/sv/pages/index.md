@@ -4,6 +4,7 @@ slug: hem
 translationKey: index
 layout: home
 tags: _home
+titleTemplate: '%s • %siteTitle%'
 seo:
   title: Hållbart 11ty starter theme
   description: elva är ett nybörjartema från 11ty med fokus på prestanda, i8ln och enkel innehållshantering med Front Matter CMS.
