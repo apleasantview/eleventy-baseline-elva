@@ -8,9 +8,9 @@ seo:
 <?xml version="1.0" encoding="UTF-8"?>
 <opml version="2.0">
     <head>
-        <title>{{ 'meta.blogrollTitle' | translate }} {{ settings.meta.separator }} {{ 'meta.title' | translate }}</title>
-        <ownerName>{{ settings.author.name }}</ownerName>
-        <ownerEmail>{{ settings.author.email }}</ownerEmail>
+        <title>{{ 'meta.blogrollTitle' | translate }} {{ _elva.meta.separator }} {{ 'meta.title' | translate }}</title>
+        <ownerName>{{ _elva.author.name }}</ownerName>
+        <ownerEmail>{{ _elva.author.email }}</ownerEmail>
         <ownerId>{{ settings.url }}</ownerId>
         <dateCreated>{{ page.date | dateToRfc822 }}</dateCreated>
     </head>

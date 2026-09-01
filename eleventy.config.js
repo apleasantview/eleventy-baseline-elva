@@ -35,7 +35,9 @@ import locales from './src/_data/locales.json' with { type: 'json' }
 const defaultLanguage = Object.keys(locales).find(key => locales[key].default);
 
 // Settings
-import settings from './src/_data/settings.json' with { type: 'json' }
+// _elva.js holds what the starter reads; settings.js holds Baseline's contract and is
+// imported by the plugin registration rather than here. D9.
+import elva from './src/_data/_elva.js';
 
 // Collections
 const collections = await import('./src/_data/types.json', { with: { type: 'json' } });
@@ -44,31 +46,20 @@ const collections = await import('./src/_data/types.json', { with: { type: 'json
 
 export default async function(eleventyConfig) {
 
-    // Global Settings --------------------------------
-
-    eleventyConfig.addGlobalData('settings', {
-        // these get merged with src/_data/settings.json
-        url: process.env.URL || process.env.CF_PAGES_URL || 'http://localhost:8080',
-        isProduction: process.env.ELEVENTY_ENV === 'production',
-        isStaging: (process.env.URL && process.env.URL.includes('github.io')) || (process.env.CF_PAGES_BRANCH && process.env.CF_PAGES_BRANCH !== 'main') || (process.env.ELEVENTY_ENV === 'staging') || false,
-        year: new Date().getFullYear(),
-        theme: process.env.ELVA_THEME || settings.theme
-    });
-
     // Watch Targets ----------------------------------
 
     eleventyConfig.setUseGitIgnore(false);
     eleventyConfig.addWatchTarget('./src/assets');
     eleventyConfig.addWatchTarget('./src/themes/**/*.{css,js}');
     eleventyConfig.addWatchTarget('./elva/templates/*', { resetConfig: true });
-    eleventyConfig.addWatchTarget(`./src/themes/${eleventyConfig.globalData.settings.theme}/_layouts/opengraph-preview.njk`, { resetConfig: true });
+    eleventyConfig.addWatchTarget(`./src/themes/${elva.theme}/_layouts/opengraph-preview.njk`, { resetConfig: true });
 
     // Virtual Templates ------------------------------
 
     // development only open graph template
     if (process.env.ELEVENTY_RUN_MODE && process.env.ELEVENTY_RUN_MODE !== 'build') {
-        const ogPreviewTemplate = fs.readFileSync(path.resolve(`src/themes/${eleventyConfig.globalData.settings.theme}/_layouts/`, 'opengraph-preview.njk'), 'utf-8');
-        eleventyConfig.addTemplate('opengraph-preview.njk', ogPreviewTemplate, { theme: eleventyConfig.globalData.settings.theme });
+        const ogPreviewTemplate = fs.readFileSync(path.resolve(`src/themes/${elva.theme}/_layouts/`, 'opengraph-preview.njk'), 'utf-8');
+        eleventyConfig.addTemplate('opengraph-preview.njk', ogPreviewTemplate, { theme: elva.theme });
     }
 
     const robotsTemplate = fs.readFileSync(path.resolve('elva/templates/', 'robots.njk'), 'utf-8');
@@ -130,7 +121,7 @@ export default async function(eleventyConfig) {
 
     // await autoImportShortcodes(eleventyConfig);
     eleventyConfig.addShortcode('version', () => `${+ new Date()}`);
-    eleventyConfig.addShortcode('year', () => `${eleventyConfig.globalData.settings.year}`);
+    eleventyConfig.addShortcode('year', () => `${elva.year}`);
     eleventyConfig.addShortcode('build', () => `${new Date().toISOString().split('T')[0]}`);
 
     // Filters ----------------------------------------
@@ -142,7 +133,7 @@ export default async function(eleventyConfig) {
     eleventyConfig.addPassthroughCopy({'./src/assets/img/favicon.ico': './favicon.ico'});
     eleventyConfig.addPassthroughCopy({'./src/assets/img': './assets/img'});
     eleventyConfig.addPassthroughCopy({'./src/assets/svg': './assets/svg'});
-    eleventyConfig.addPassthroughCopy({[`./src/themes/${eleventyConfig.globalData.settings.theme}/fonts`]: './assets/fonts'});
+    eleventyConfig.addPassthroughCopy({[`./src/themes/${elva.theme}/fonts`]: './assets/fonts'});
 
     // Markdown ----------------------------------------
 
@@ -165,7 +156,7 @@ export default async function(eleventyConfig) {
 
     // 11ty Settings -----------------------------------
 
-    eleventyConfig.logger.message(`Theme: ${eleventyConfig.globalData.settings.theme}`);
+    eleventyConfig.logger.message(`Theme: ${elva.theme}`);
 
     return {
         markdownTemplateEngine: 'njk',
@@ -179,8 +170,8 @@ export default async function(eleventyConfig) {
             input: 'src',
             output: 'dist',
             data: '_data',
-            includes: `themes/${eleventyConfig.globalData.settings.theme}/_includes`,
-            layouts: `themes/${eleventyConfig.globalData.settings.theme}/_layouts`
+            includes: `themes/${elva.theme}/_includes`,
+            layouts: `themes/${elva.theme}/_layouts`
         }
     }
 }

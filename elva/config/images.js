@@ -1,9 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
-import settings from '../../src/_data/settings.json' with { type: 'json' }
+import elva from '../../src/_data/_elva.js';
+import settings from '../../src/_data/settings.js';
 
 export default (eleventyConfig) => {
-    const cdnify = (eleventyConfig.globalData.settings.isProduction || eleventyConfig.globalData.settings.isStaging) && settings.cdn;
+    const cdnify = (elva.isProduction || elva.isStaging) && elva.cdn;
     let outputdir = { outputDir: path.join(eleventyConfig.directories.output, '/assets/img/') }
 
     // cache images for faster builds
@@ -26,7 +27,7 @@ export default (eleventyConfig) => {
         // generate CDN urls when turned on
         urlFormat: (cdnify) ? function({src, width}) {
             const quality = (src.endsWith('.gif')) ? '100' : '85';
-            return `https://i0.wp.com/${eleventyConfig.globalData.settings.url.replace(/^https?:\/\//, '')}/${src.replace('src/', '')}?w=${width}&quality=${quality}&strip=info`;
+            return `https://i0.wp.com/${settings.url.replace(/^https?:\/\//, '')}/${src.replace('src/', '')}?w=${width}&quality=${quality}&strip=info`;
         } : undefined,
 
         // sharp options: https://www.11ty.dev/docs/plugins/image/#advanced-control-of-sharp-image-processor

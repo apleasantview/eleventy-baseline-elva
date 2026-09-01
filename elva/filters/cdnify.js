@@ -1,5 +1,5 @@
 export function cdnify(url) {
-    if ((this.ctx.settings.isProduction || this.ctx.settings.isStaging) && this.ctx.settings.cdn) {
+    if ((this.ctx._elva.isProduction || this.ctx._elva.isStaging) && this.ctx._elva.cdn) {
         url = 'https://i0.wp.com/' + url.replace(/^https?:\/\//, '');
     }
     return url;

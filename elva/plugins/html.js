@@ -1,9 +1,10 @@
+import elva from '../../src/_data/_elva.js';
 import minifyHtml from '@minify-html/node';
 import { Buffer } from 'node:buffer';
 
 export function html(eleventyConfig) {
     eleventyConfig.addTransform('html-minify', (content, path) => {
-        if (path && path.endsWith('.html') && eleventyConfig.globalData.settings.isProduction) {
+        if (path && path.endsWith('.html') && elva.isProduction) {
             try {
                 const minified = minifyHtml.minify(Buffer.from(content), {
                     keep_closing_tags: true,
