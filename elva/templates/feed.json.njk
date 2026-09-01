@@ -29,7 +29,10 @@ seo:
             "url": "{{ absolutePostUrl }}",
             "title": "{{ post.data.title }}",
             "image": "{{ image | cdnify }}",
-            "content_html": {% if post.templateContent %}{{ post.templateContent | renderTransforms | htmlToAbsoluteUrls(absolutePostUrl) | dump | safe }}{% else %}""{% endif %},
+            {# transformWithHtmlBase, not htmlToAbsoluteUrls — same distinction as the entry URLs
+               above, applied to a block of HTML instead of one link. feed.xml.njk already uses it
+               for <content>; this is the JSON half of the same feed and was the odd one out. #}
+            "content_html": {% if post.templateContent %}{{ post.templateContent | renderTransforms | transformWithHtmlBase(settings.url) | dump | safe }}{% else %}""{% endif %},
             "date_published": "{{ post.date | dateToRfc3339 }}",
             "language": "{{ post.lang }}",
             "tags": [{% set comma = joiner(",") %}{% for tag in post.data.tags | filterprivatetags %}{{ comma() }}"{{ tag }}"{% endfor %}]
