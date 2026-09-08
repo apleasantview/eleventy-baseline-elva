@@ -110,20 +110,10 @@ export default async function (eleventyConfig) {
 			const feedJsonTemplate = fs.readFileSync(path.resolve('elva/templates/', 'feed.json.njk'), 'utf-8');
 
 			const feedSlug = collectionName === 'posts' ? 'feed' : collectionName;
-			eleventyConfig.addTemplate(key + '-' + collectionName + '-feed.xml.njk', feedXmlTemplate, {
-				lang: key,
-				collectionName,
-				collectionTag: `_${collectionName}`,
-				label: config.label,
-				feedSlug
-			});
-			eleventyConfig.addTemplate(key + '-' + collectionName + '-feed.json.njk', feedJsonTemplate, {
-				lang: key,
-				collectionName,
-				collectionTag: `_${collectionName}`,
-				label: config.label,
-				feedSlug
-			});
+			// eleventyImport declares which collection the template consumes and prevents feeds rendering before posts do.
+			const feedData = { lang: key, collectionName, collectionTag: `_${collectionName}`, eleventyImport: { collections: [`_${collectionName}`] }, label: config.label, feedSlug };
+			eleventyConfig.addTemplate(key + '-' + collectionName + '-feed.xml.njk', feedXmlTemplate, feedData);
+			eleventyConfig.addTemplate(key + '-' + collectionName + '-feed.json.njk', feedJsonTemplate, feedData);
 		}
 	}
 
