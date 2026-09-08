@@ -81,8 +81,9 @@ export const handleExitError = (error) => {
 
 export const clean = () => {
 	// because the output folder can be customised in 11ty, we need to check the value for our clean up script
-	const match = readFileSync('.eleventy.js', 'utf-8').match(/dir:\s*\{[^}]*output:\s*['"]([^'"]+)['"]/s);
+	const match = readFileSync('eleventy.config.js', 'utf-8').match(/dir:\s*\{[^}]*output:\s*['"]([^'"]+)['"]/s);
 	const outputDir = match?.[1] ?? 'dist';
 	info(`Deleting ${outputDir} folder...`);
 	rmSync(outputDir, { recursive: true, force: true });
 };
+
