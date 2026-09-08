@@ -9,3 +9,4 @@ node_modules
 notes.md
 package-lock.json
 readme.md
+temp/
