@@ -190,21 +190,21 @@ export default async function (eleventyConfig) {
 	// 11ty Settings -----------------------------------
 
 	eleventyConfig.logger.message(`Theme: ${eleventyConfig.globalData.settings.theme}`);
-
-	return {
-		markdownTemplateEngine: 'njk',
-		htmlTemplateEngine: 'njk',
-		dataTemplateEngine: 'njk',
-
-		// If your site deploys to a subdirectory, change `pathPrefix`
-		pathPrefix: '/',
-
-		dir: {
-			input: 'content',
-			output: 'dist',
-			data: '_data',
-			includes: `../themes/${eleventyConfig.globalData.settings.theme}/_includes`,
-			layouts: `../themes/${eleventyConfig.globalData.settings.theme}/_layouts`
-		}
-	};
 }
+
+export const config = {
+	markdownTemplateEngine: 'njk',
+	htmlTemplateEngine: 'njk',
+	dataTemplateEngine: 'njk',
+
+	// If your site deploys to a subdirectory, change `pathPrefix`
+	pathPrefix: '/',
+
+	dir: {
+		input: 'content',
+		output: 'dist',
+		data: '_data',
+		includes: `../themes/${settings.theme}/_includes`,
+		layouts: `../themes/${settings.theme}/_layouts`,
+	},
+};
