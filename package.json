@@ -5,14 +5,18 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "npm run clean && npx @11ty/eleventy",
-    "build:prod": "npm run clean && cross-env NODE_ENV=production npx @11ty/eleventy",
-    "build:stage": "npm run clean && cross-env NODE_ENV=staging npx @11ty/eleventy",
-    "dev": "npm run clean && npx @11ty/eleventy --watch --serve --incremental",
-    "clean": "node .cli/index.js clean",
+    "start": "npm-run-all clean dev",
+    "build": "npm-run-all clean build:prod",
+    "stage": "npm-run-all clean build:stage",
+    "build:prod": "cross-env NODE_ENV=production eleventy",
+    "build:stage": "cross-env NODE_ENV=staging eleventy",
+    "dev": "eleventy --watch --serve --incremental",
+    "clean": "rimraf dist/",
     "cli": "node .cli/index.js",
-    "debug": "cross-env DEBUG=Eleventy* npm run dev",
-    "benchmark": "cross-env DEBUG=Eleventy:Benchmark* npm run build:prod",
+    "debug": "npm-run-all clean debug:serve",
+    "debug:serve": "cross-env DEBUG=Eleventy* npm run dev",
+    "benchmark": "npm-run-all clean benchmark:build",
+    "benchmark:build": "cross-env DEBUG=Eleventy:Benchmark* npm run build:prod",
     "test": "echo \"Error: no test specified\" && exit 1",
     "release-patch": "npm version patch --force && npm publish",
     "release-minor": "npm version minor --force && npm publish",
@@ -81,7 +85,9 @@
     "cross-env": "^10.1.0",
     "eslint": "^10.10.0",
     "globals": "^17.12.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "^3.9.6",
-    "prettier-plugin-jinja-template": "^2.2.0"
+    "prettier-plugin-jinja-template": "^2.2.0",
+    "rimraf": "^6.1.3"
   }
 }
