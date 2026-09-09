@@ -44,7 +44,7 @@ npm run cli blogroll remove
 Alla blogroll-poster lagras i `content/_data/blogroll.json`. Du kan redigera den här filen direkt om du föredrar det. Varje post innehåller följande fält:
 
 ``` json
-{% include "../../_data/blogroll.json" %}
+{% include "../../../_data/blogroll.json" %}
 ```
 
 - `name` — Visningsnamnet på webbplatsen eller personen.

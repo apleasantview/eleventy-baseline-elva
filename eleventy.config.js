@@ -31,14 +31,14 @@ import pluginImageTransformConfig from './elva/config/images.js';
 import { autoImportFilters, autoImportPlugins } from './elva/utils/autoimport.js';
 
 // Languages
-import locales from './content/_data/locales.json' with { type: 'json' };
+import locales from './src/_data/locales.json' with { type: 'json' };
 const defaultLanguage = Object.keys(locales).find((key) => locales[key].default);
 
 // Settings
-import settings from './content/_data/settings.json' with { type: 'json' };
+import settings from './src/_data/settings.json' with { type: 'json' };
 
 // Collections
-const collections = await import('./content/_data/types.json', { with: { type: 'json' } });
+const collections = await import('./src/_data/types.json', { with: { type: 'json' } });
 
 // 11ty -----------------------------------------------
 
@@ -61,7 +61,7 @@ export default async function (eleventyConfig) {
 	// Watch Targets ----------------------------------
 
 	eleventyConfig.setUseGitIgnore(false);
-	eleventyConfig.addWatchTarget('./content/assets');
+	eleventyConfig.addWatchTarget('./src/assets');
 	eleventyConfig.addWatchTarget('./themes/**/*.{css,js}');
 	eleventyConfig.addWatchTarget('./elva/templates/*', { resetConfig: true });
 	eleventyConfig.addWatchTarget(`./themes/${eleventyConfig.globalData.settings.theme}/_layouts/opengraph-preview.njk`, {
@@ -147,13 +147,13 @@ export default async function (eleventyConfig) {
 
 	// Passthrough -------------------------------------
 
-	eleventyConfig.addPassthroughCopy({ './content/assets/img/favicon.ico': './favicon.ico' });
-	eleventyConfig.addPassthroughCopy({ './content/assets/img': './assets/img' });
-	eleventyConfig.addPassthroughCopy({ './content/assets/svg': './assets/svg' });
+	eleventyConfig.addPassthroughCopy({ './src/assets/img/favicon.ico': './favicon.ico' });
+	eleventyConfig.addPassthroughCopy({ './src/assets/img': './assets/img' });
+	eleventyConfig.addPassthroughCopy({ './src/assets/svg': './assets/svg' });
 	eleventyConfig.addPassthroughCopy({
 		[`./themes/${eleventyConfig.globalData.settings.theme}/fonts`]: './assets/fonts'
 	});
-	eleventyConfig.addPassthroughCopy({ './content/assets/files': './assets/files' });
+	eleventyConfig.addPassthroughCopy({ './src/assets/files': './assets/files' });
 
 	// Markdown ----------------------------------------
 
@@ -191,7 +191,7 @@ export const config = {
 	pathPrefix: '/',
 
 	dir: {
-		input: 'content',
+		input: 'src',
 		output: 'dist',
 		data: '_data',
 		includes: `../themes/${settings.theme}/_includes`,

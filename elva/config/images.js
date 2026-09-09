@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import settings from '../../content/_data/settings.json' with { type: 'json' };
+import settings from '../../src/_data/settings.json' with { type: 'json' };
 
 export default (eleventyConfig) => {
 	const cdnify =

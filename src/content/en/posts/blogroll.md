@@ -44,7 +44,7 @@ npm run cli blogroll remove
 All blogroll entries are stored in `content/_data/blogroll.json`. You can edit this file directly if you prefer. Each entry contains the following fields:
 
 ``` json
-{% include "../../_data/blogroll.json" %}
+{% include "../../../_data/blogroll.json" %}
 ```
 
 - `name` — The display name of the site or person.

@@ -61,7 +61,7 @@ npm run cli collection remove
 All collection configuration is stored in `content/_data/types.json`. You can edit this file directly if you prefer. Here is what the file looks like:
 
 ``` json
-{% include "../../_data/types.json" %}
+{% include "../../../_data/types.json" %}
 ```
 
 Each collection entry contains the following fields:
