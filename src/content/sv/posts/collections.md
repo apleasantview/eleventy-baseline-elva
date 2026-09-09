@@ -63,7 +63,7 @@ npm run cli collection remove
 All samlingskonfiguration lagras i `content/_data/types.json`. Du kan redigera den här filen direkt om du föredrar det. Så här ser filen ut:
 
 ``` json
-{% include "../../_data/types.json" %}
+{% include "../../../_data/types.json" %}
 ```
 
 Varje samlingspost innehåller följande fält:

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import settings from '../../content/_data/settings.json' with { type: 'json' };
+import settings from '../../src/_data/settings.json' with { type: 'json' };
 
 export default (eleventyConfig) => {
 	const cdnify =
@@ -28,7 +28,7 @@ export default (eleventyConfig) => {
 		urlFormat: cdnify
 			? function ({ src, width }) {
 					const quality = src.endsWith('.gif') ? '100' : '85';
-					return `https://i0.wp.com/${eleventyConfig.globalData.settings.url.replace(/^https?:\/\//, '')}/${src.replace('content/', '')}?w=${width}&quality=${quality}&strip=info`;
+					return `https://i0.wp.com/${eleventyConfig.globalData.settings.url.replace(/^https?:\/\//, '')}/${src.replace('src/', '')}?w=${width}&quality=${quality}&strip=info`;
 				}
 			: undefined,
 
