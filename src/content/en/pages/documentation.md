@@ -1,5 +1,6 @@
 ---
 title: Documentation
+slug: documentation
 layout: posts
 eleventyNavigation:
   key: docs

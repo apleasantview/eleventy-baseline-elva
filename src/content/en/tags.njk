@@ -14,6 +14,7 @@
     }
   },
   eleventyComputed: {
+    slug: function(data) { this.slugify(data.tag) },
     title: "{{ 'tags.tagged' | translate }} “{{ tag }}”",
     permalink: "{{ ('/' + lang + '/tag/' + (tag | slugify) + '/') | defaultlocaleurl }}",
     tags: function(data) { return ['tag', `tag-${this.slugify(data.tag)}`]; },

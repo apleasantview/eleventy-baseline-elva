@@ -1,5 +1,6 @@
 ---
 title: Home
+slug: home
 layout: home
 tags: _home
 seo:

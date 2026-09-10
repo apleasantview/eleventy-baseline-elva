@@ -1,5 +1,6 @@
 ---
 title: Video embed example
+slug: video-embed-example
 date: 2023-08-01
 tags:
   - tag2

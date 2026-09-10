@@ -1,5 +1,6 @@
 ---
 title: Other embed examples
+slug: other-embed-examples
 date: 2023-07-31
 tags:
   - tag1
