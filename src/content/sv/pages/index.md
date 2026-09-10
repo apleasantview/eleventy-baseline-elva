@@ -1,5 +1,6 @@
 ---
 title: Hem
+slug: hem
 layout: home
 tags: _home
 seo:

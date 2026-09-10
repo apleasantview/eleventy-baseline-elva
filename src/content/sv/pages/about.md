@@ -1,5 +1,6 @@
 ---
 title: Om
+slug: om
 tags: _search
 seo:
   slug: om

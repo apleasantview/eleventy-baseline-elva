@@ -1,5 +1,6 @@
 ---
 title: Hantering samlingar
+slug: samlingar
 date: 2026-06-09
 tags:
   - tag1
