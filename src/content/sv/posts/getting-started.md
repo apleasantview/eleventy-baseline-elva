@@ -1,11 +1,12 @@
 ---
 title: Komma igång
-seo:
-  slug: komma-igang
+slug: komma-igang
 date: 2026-06-12
 tags:
   - tag1
   - tag2
+seo:
+  slug: komma-igang
 ---
 
 elva är ett flersprákigt startpaket for statiska webbplatser byggt pá [Eleventy](https://11ty.dev). Det är designat for personliga webbplatser, bloggar, portföljer och sajter som ska fungera bra pá flera sprák. [elva](https://github.com/scottsweb/elva) ger en solid grund for ditt nästa webbprojekt, du kan se en fullständig lista over funktioner pá [om-sidan](/sv/om/).

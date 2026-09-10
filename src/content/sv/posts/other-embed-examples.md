@@ -1,5 +1,6 @@
 ---
 title: Andra inbäddningsexempel
+slug: andra-inbaddningsexempel
 date: 2023-07-31
 tags:
   - tag1

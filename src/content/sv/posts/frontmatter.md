@@ -1,5 +1,6 @@
 ---
 title: Front matter
+slug: front-matter
 date: 2026-06-04
 tags:
   - tag4

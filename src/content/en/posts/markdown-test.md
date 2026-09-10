@@ -1,5 +1,6 @@
 ---
 title: Markdown test
+slug: markdown-test
 date: 2026-06-05
 tags:
   - tag4

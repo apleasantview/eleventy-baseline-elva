@@ -1,5 +1,6 @@
 ---
 title: Create a blogroll
+slug: create-a-blogroll
 date: 2026-06-06
 tags:
   - tag4
