@@ -43,15 +43,6 @@ const collections = await import('./src/_data/types.json', { with: { type: 'json
 // 11ty -----------------------------------------------
 
 export default async function (eleventyConfig) {
-	// Global Settings --------------------------------
-
-	// Everything else elva derives from the environment now lives in src/_data/_elva.js, which
-	// is a module this file can import directly. url is the one value Baseline's contract also
-	// needs, so it stays on settings.
-	eleventyConfig.addGlobalData('settings', {
-		url: process.env.URL || process.env.CF_PAGES_URL || 'http://localhost:8080'
-	});
-
 	// Watch Targets ----------------------------------
 
 	eleventyConfig.setUseGitIgnore(false);
