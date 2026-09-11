@@ -5,11 +5,11 @@ seo:
   excludeFromSitemap: true
 ---
 /* TEAM */
-Designer / Developer: {{ settings.author.name }}
-Contact: {{ settings.author.email }}
-Site: {{ settings.author.url }}
-From: {{ settings.author.location }}
-{% if settings.author.fediverseProfile %}Fediverse: {{ settings.author.fediverseProfile }}{% endif %}
+Designer / Developer: {{ _elva.author.name }}
+Contact: {{ _elva.author.email }}
+Site: {{ _elva.author.url }}
+From: {{ _elva.author.location }}
+{% if _elva.author.fediverseProfile %}Fediverse: {{ _elva.author.fediverseProfile }}{% endif %}
 
 /* SITE */
 Last update: {% build %}

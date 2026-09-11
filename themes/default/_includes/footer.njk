@@ -1,7 +1,7 @@
 <footer id="footer" class="footer">
 	{% include "switch-darkmode.njk" %}
 
-	<p class="subtle">{{ 'footer' | translate(page.lang, { year: settings.year }) }}</p>
+	<p class="subtle">{{ 'footer' | translate(page.lang, { year: _elva.year }) }}</p>
 
 	<a
 		href="{{ "/feed/feed.xml" | locale_url }}"

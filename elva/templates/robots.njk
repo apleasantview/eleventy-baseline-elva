@@ -4,7 +4,7 @@ eleventyExcludeFromCollections: true
 seo:
   excludeFromSitemap: true
 ---
-{%- if settings.isProduction -%}
+{%- if _elva.isProduction -%}
 {%- if locales | length == 1 -%}
 Sitemap: {{ "/sitemap.xml" | htmlBaseUrl(settings.url) }}
 {%- else -%}

@@ -1,3 +1,4 @@
+import elva from '../../src/_data/_elva.js';
 import { transform, Features, browserslistToTargets } from 'lightningcss';
 import browserslist from 'browserslist';
 
@@ -8,7 +9,7 @@ export function css(eleventyConfig) {
 			async function (content) {
 				const css = await transform({
 					code: Buffer.from(content),
-					minify: eleventyConfig.globalData.settings.isProduction,
+					minify: elva.isProduction,
 					sourceMap: false,
 					include: Features.Nesting,
 					drafts: { customMedia: true },
