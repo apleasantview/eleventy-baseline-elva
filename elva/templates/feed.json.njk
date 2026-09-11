@@ -7,7 +7,7 @@ seo:
 ---
 {
     "version": "https://jsonfeed.org/version/1.1",
-    "title": "{{ label }} {{ settings.meta.separator }} {{ 'meta.jsonTitle' | translate }} {{ settings.meta.separator }} {{ 'meta.title' | translate }}",
+    "title": "{{ label }} {{ _elva.meta.separator }} {{ 'meta.jsonTitle' | translate }} {{ _elva.meta.separator }} {{ 'meta.title' | translate }}",
     "description": "{{ 'meta.description' | translate }}",
     "language": "{{ page.lang }}",
     "home_page_url": "{{ "/" | htmlBaseUrl(settings.url) }}",
@@ -16,14 +16,14 @@ seo:
     "favicon": "{{ "/assets/img/icon-180.png" | htmlBaseUrl(settings.url) | cdnify }}",
     "authors": [
         {
-            "name": "{{ settings.author.name }}",
-            "url": "{{ settings.author.url }}"
+            "name": "{{ _elva.author.name }}",
+            "url": "{{ _elva.author.url }}"
         }
     ],
     "items": [
         {%- for post in collections[collectionTag] | reverse %}
         {%- set absolutePostUrl = post.url | htmlBaseUrl(settings.url) %}
-        {%- set image = (post.data.thumbnail or settings.meta.opengraphDefaultImage) | htmlBaseUrl(settings.url) | cdnify %}
+        {%- set image = (post.data.thumbnail or _elva.meta.opengraphDefaultImage) | htmlBaseUrl(settings.url) | cdnify %}
         {
             "id": "{{ absolutePostUrl }}",
             "url": "{{ absolutePostUrl }}",

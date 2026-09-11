@@ -18,7 +18,7 @@ seo:
             "id": {{ loop.index }},
             "url": "{{ absolutePostUrl }}",
             "title": "{{ post.data.card or post.data.title }}",
-            "thumbnail": "{{ (thumbnail or settings.meta.opengraphDefaultImage) | htmlBaseUrl(settings.url) }}",
+            "thumbnail": "{{ (thumbnail or _elva.meta.opengraphDefaultImage) | htmlBaseUrl(settings.url) }}",
             "language": "{{ post.page.lang }}",
             "date_updated": "{{ post.date | dateToRfc3339 }}",
             "excerpt": "{{ post.data.seo.description | striptags | truncate(150, false, '…') | safe }}",

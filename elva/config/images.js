@@ -1,10 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import settings from '../../src/_data/settings.json' with { type: 'json' };
+import elva from '../../src/_data/_elva.js';
 
 export default (eleventyConfig) => {
-	const cdnify =
-		(eleventyConfig.globalData.settings.isProduction || eleventyConfig.globalData.settings.isStaging) && settings.cdn;
+	const cdnify = (elva.isProduction || elva.isStaging) && elva.cdn;
 	let outputdir = { outputDir: path.join(eleventyConfig.directories.output, '/assets/img/') };
 
 	// cache images for faster builds

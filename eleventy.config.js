@@ -35,7 +35,7 @@ import locales from './src/_data/locales.json' with { type: 'json' };
 const defaultLanguage = Object.keys(locales).find((key) => locales[key].default);
 
 // Settings
-import settings from './src/_data/settings.json' with { type: 'json' };
+import elva from './src/_data/_elva.js';
 
 // Collections
 const collections = await import('./src/_data/types.json', { with: { type: 'json' } });
@@ -45,17 +45,11 @@ const collections = await import('./src/_data/types.json', { with: { type: 'json
 export default async function (eleventyConfig) {
 	// Global Settings --------------------------------
 
+	// Everything else elva derives from the environment now lives in src/_data/_elva.js, which
+	// is a module this file can import directly. url is the one value Baseline's contract also
+	// needs, so it stays on settings.
 	eleventyConfig.addGlobalData('settings', {
-		// these get merged with content/_data/settings.js
-		url: process.env.URL || process.env.CF_PAGES_URL || 'http://localhost:8080',
-		isProduction: process.env.ELEVENTY_ENV === 'production',
-		isStaging:
-			(process.env.URL && process.env.URL.includes('github.io')) ||
-			(process.env.CF_PAGES_BRANCH && process.env.CF_PAGES_BRANCH !== 'main') ||
-			(process.env.ELEVENTY_ENV === 'staging') ||
-			false,
-		year: new Date().getFullYear(),
-		theme: process.env.ELVA_THEME || settings.theme
+		url: process.env.URL || process.env.CF_PAGES_URL || 'http://localhost:8080'
 	});
 
 	// Watch Targets ----------------------------------
@@ -64,7 +58,7 @@ export default async function (eleventyConfig) {
 	eleventyConfig.addWatchTarget('./src/assets');
 	eleventyConfig.addWatchTarget('./themes/**/*.{css,js}');
 	eleventyConfig.addWatchTarget('./elva/templates/*', { resetConfig: true });
-	eleventyConfig.addWatchTarget(`./themes/${eleventyConfig.globalData.settings.theme}/_layouts/opengraph-preview.njk`, {
+	eleventyConfig.addWatchTarget(`./themes/${elva.theme}/_layouts/opengraph-preview.njk`, {
 		resetConfig: true
 	});
 
@@ -73,11 +67,11 @@ export default async function (eleventyConfig) {
 	// development only open graph template
 	if (process.env.ELEVENTY_RUN_MODE && process.env.ELEVENTY_RUN_MODE !== 'build') {
 		const ogPreviewTemplate = fs.readFileSync(
-			path.resolve(`themes/${eleventyConfig.globalData.settings.theme}/_layouts/`, 'opengraph-preview.njk'),
+			path.resolve(`themes/${elva.theme}/_layouts/`, 'opengraph-preview.njk'),
 			'utf-8'
 		);
 		eleventyConfig.addTemplate('opengraph-preview.njk', ogPreviewTemplate, {
-			theme: eleventyConfig.globalData.settings.theme
+			theme: elva.theme
 		});
 	}
 
@@ -111,7 +105,14 @@ export default async function (eleventyConfig) {
 
 			const feedSlug = collectionName === 'posts' ? 'feed' : collectionName;
 			// eleventyImport declares which collection the template consumes and prevents feeds rendering before posts do.
-			const feedData = { lang: key, collectionName, collectionTag: `_${collectionName}`, eleventyImport: { collections: [`_${collectionName}`] }, label: config.label, feedSlug };
+			const feedData = {
+				lang: key,
+				collectionName,
+				collectionTag: `_${collectionName}`,
+				eleventyImport: { collections: [`_${collectionName}`] },
+				label: config.label,
+				feedSlug
+			};
 			eleventyConfig.addTemplate(key + '-' + collectionName + '-feed.xml.njk', feedXmlTemplate, feedData);
 			eleventyConfig.addTemplate(key + '-' + collectionName + '-feed.json.njk', feedJsonTemplate, feedData);
 		}
@@ -138,7 +139,7 @@ export default async function (eleventyConfig) {
 
 	// await autoImportShortcodes(eleventyConfig);
 	eleventyConfig.addShortcode('version', () => `${+new Date()}`);
-	eleventyConfig.addShortcode('year', () => `${eleventyConfig.globalData.settings.year}`);
+	eleventyConfig.addShortcode('year', () => `${elva.year}`);
 	eleventyConfig.addShortcode('build', () => `${new Date().toISOString().split('T')[0]}`);
 
 	// Filters ----------------------------------------
@@ -151,7 +152,7 @@ export default async function (eleventyConfig) {
 	eleventyConfig.addPassthroughCopy({ './src/assets/img': './assets/img' });
 	eleventyConfig.addPassthroughCopy({ './src/assets/svg': './assets/svg' });
 	eleventyConfig.addPassthroughCopy({
-		[`./themes/${eleventyConfig.globalData.settings.theme}/fonts`]: './assets/fonts'
+		[`./themes/${elva.theme}/fonts`]: './assets/fonts'
 	});
 	eleventyConfig.addPassthroughCopy({ './src/assets/files': './assets/files' });
 
@@ -179,7 +180,7 @@ export default async function (eleventyConfig) {
 
 	// 11ty Settings -----------------------------------
 
-	eleventyConfig.logger.message(`Theme: ${eleventyConfig.globalData.settings.theme}`);
+	eleventyConfig.logger.message(`Theme: ${elva.theme}`);
 }
 
 export const config = {
@@ -194,7 +195,7 @@ export const config = {
 		input: 'src',
 		output: 'dist',
 		data: '_data',
-		includes: `../themes/${settings.theme}/_includes`,
-		layouts: `../themes/${settings.theme}/_layouts`,
-	},
+		includes: `../themes/${elva.theme}/_includes`,
+		layouts: `../themes/${elva.theme}/_layouts`
+	}
 };

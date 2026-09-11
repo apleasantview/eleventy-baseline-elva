@@ -16,8 +16,8 @@ eleventyExcludeFromCollections: true
 		{%- else %}
 		<lastmod>{{ page.date | dateToRfc3339 }}</lastmod>
 		{%- endif %}
-		<changefreq>{{ page.data.seo.changeFrequency or settings.seo.defaultChangeFrequency }}</changefreq>
-		<priority>{{ page.data.seo.sitemapPriority or settings.seo.defaultPriority }}</priority>
+		<changefreq>{{ page.data.seo.changeFrequency or _elva.seo.defaultChangeFrequency }}</changefreq>
+		<priority>{{ page.data.seo.sitemapPriority or _elva.seo.defaultPriority }}</priority>
 	</url>
 	{%- endif %}
 {%- endfor %}
