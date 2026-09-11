@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import elva from '../../src/_data/_elva.js';
+import settings from '../../src/_data/settings.js';
 
 export default (eleventyConfig) => {
 	const cdnify = (elva.isProduction || elva.isStaging) && elva.cdn;
@@ -27,7 +28,7 @@ export default (eleventyConfig) => {
 		urlFormat: cdnify
 			? function ({ src, width }) {
 					const quality = src.endsWith('.gif') ? '100' : '85';
-					return `https://i0.wp.com/${eleventyConfig.globalData.settings.url.replace(/^https?:\/\//, '')}/${src.replace('content/', '')}?w=${width}&quality=${quality}&strip=info`;
+					return `https://i0.wp.com/${settings.url.replace(/^https?:\/\//, '')}/${src.replace('content/', '')}?w=${width}&quality=${quality}&strip=info`;
 				}
 			: undefined,
 
