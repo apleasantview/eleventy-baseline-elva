@@ -49,7 +49,7 @@ export default async function (eleventyConfig) {
 		baseline(settings, {
 			verbose: true,
 			multilingual: true,
-			head: { titleSeparator: ' • ' }
+			head: { titleSeparator: ' • ', showGenerator: true }
 		})
 	);
 

@@ -33,9 +33,16 @@ export default {
 
 	// Additive <head> entries injected on every page.
 	head: {
-		link: [{ rel: 'stylesheet', href: '/assets/css/index.css' }],
+		link: [
+			{ rel: 'stylesheet', href: '/assets/css/index.css' },
+			{ rel: 'icon', href: '/favicon.ico', sizes: 'any' },
+			{ rel: 'icon', href: '/assets/img/icon.svg', type: 'image/svg+xml' }
+		],
 		script: [{ src: '/assets/js/index.js', defer: true }],
-		meta: [],
+		meta: [
+			{ name: 'text-scale', content: 'scale' },
+			{ name: 'color-scheme', content: 'light dark' }
+		],
 		style: []
 	},
 
