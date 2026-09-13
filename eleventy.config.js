@@ -2,7 +2,7 @@
 
 // Imports --------------------------------------------
 
-import { EleventyI18nPlugin, EleventyRenderPlugin, IdAttributePlugin } from '@11ty/eleventy';
+import { EleventyRenderPlugin, IdAttributePlugin } from '@11ty/eleventy';
 import baseline, { config as baselineConfig } from '@apleasantview/eleventy-plugin-baseline';
 import { eleventyImageTransformPlugin } from '@11ty/eleventy-img';
 import eleventyNavigationPlugin from '@11ty/eleventy-navigation';
@@ -33,7 +33,6 @@ import { autoImportFilters, autoImportPlugins } from './elva/utils/autoimport.js
 
 // Languages
 import locales from './src/_data/locales.json' with { type: 'json' };
-const defaultLanguage = Object.keys(locales).find((key) => locales[key].default);
 
 // Settings
 import elva from './src/_data/_elva.js';
@@ -120,7 +119,6 @@ export default async function (eleventyConfig) {
 	await autoImportPlugins(eleventyConfig);
 	await eleventyConfig.addPlugin(pluginRSS, { htmlBasePluginOptions: { baseHref: settings.url } });
 	eleventyConfig.addPlugin(EleventyRenderPlugin);
-	eleventyConfig.addPlugin(EleventyI18nPlugin, { defaultLanguage: defaultLanguage, errorMode: 'never' });
 	eleventyConfig.addPlugin(IdAttributePlugin);
 	eleventyConfig.addPlugin(pluginSyntaxHighlight);
 	eleventyConfig.addPlugin(pluginEmbedEverything, pluginEmbedEverythingConfig);
