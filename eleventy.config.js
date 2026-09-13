@@ -57,16 +57,16 @@ export default async function (eleventyConfig) {
 
 	eleventyConfig.setUseGitIgnore(false);
 	eleventyConfig.addWatchTarget('./src/assets');
-	eleventyConfig.addWatchTarget('./themes/**/*.{css,js}');
+	eleventyConfig.addWatchTarget('./src/themes/**/*.{css,js}');
 	eleventyConfig.addWatchTarget('./elva/templates/*', { resetConfig: true });
-	eleventyConfig.addWatchTarget(`./themes/${elva.theme}/_layouts/opengraph-preview.njk`, { resetConfig: true });
+	eleventyConfig.addWatchTarget(`./src/themes/${elva.theme}/_layouts/opengraph-preview.njk`, { resetConfig: true });
 
 	// Virtual Templates ------------------------------
 
 	// development only open graph template
 	if (process.env.ELEVENTY_RUN_MODE && process.env.ELEVENTY_RUN_MODE !== 'build') {
 		const ogPreviewTemplate = fs.readFileSync(
-			path.resolve(`themes/${elva.theme}/_layouts/`, 'opengraph-preview.njk'),
+			path.resolve(`src/themes/${elva.theme}/_layouts/`, 'opengraph-preview.njk'),
 			'utf-8'
 		);
 		eleventyConfig.addTemplate('opengraph-preview.njk', ogPreviewTemplate, {
@@ -150,7 +150,7 @@ export default async function (eleventyConfig) {
 	eleventyConfig.addPassthroughCopy({ './src/assets/img': './assets/img' });
 	eleventyConfig.addPassthroughCopy({ './src/assets/svg': './assets/svg' });
 	eleventyConfig.addPassthroughCopy({
-		[`./themes/${elva.theme}/fonts`]: './assets/fonts'
+		[`./src/themes/${elva.theme}/fonts`]: './assets/fonts'
 	});
 	eleventyConfig.addPassthroughCopy({ './src/assets/files': './assets/files' });
 
@@ -190,8 +190,8 @@ export const config = {
 
 	dir: {
 		...baselineConfig.dir,
-		includes: `../themes/${elva.theme}/_includes`,
-		layouts: `../themes/${elva.theme}/_layouts`,
-		assets: `../themes/${elva.theme}/assets`
+		includes: `themes/${elva.theme}/_includes`,
+		layouts: `themes/${elva.theme}/_layouts`,
+		assets: `themes/${elva.theme}/assets`
 	}
 };

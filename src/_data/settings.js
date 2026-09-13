@@ -34,11 +34,14 @@ export default {
 	// Additive <head> entries injected on every page.
 	head: {
 		link: [
-			{ rel: 'stylesheet', href: '/assets/css/index.css' },
+			{ rel: 'stylesheet', href: '/themes/default/assets/css/index.css' },
 			{ rel: 'icon', href: '/favicon.ico', sizes: 'any' },
 			{ rel: 'icon', href: '/assets/img/icon.svg', type: 'image/svg+xml' }
 		],
-		script: [{ src: '/assets/js/index.js', defer: true }],
+		script: [
+			{content: "document.documentElement.dataset.theme = localStorage.getItem('theme') === null ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' : localStorage.getItem('theme')"},
+			{ src: '/themes/default/assets/js/index.js', defer: true }
+		],
 		meta: [
 			{ name: 'text-scale', content: 'scale' },
 			{ name: 'color-scheme', content: 'light dark' }

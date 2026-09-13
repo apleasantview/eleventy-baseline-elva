@@ -12,4 +12,4 @@ dist
 temp
 
 *.njk
-!themes/**/*.njk
+!src/themes/**/*.njk
