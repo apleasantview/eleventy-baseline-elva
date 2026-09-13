@@ -10,7 +10,8 @@ export default {
 	// Site-wide noindex. elva gates the same behaviour on _elva.isStaging in base.njk.
 	noindex: false,
 
-	// Language declarations.
+	// Language declarations. `dir` and `shorthand` are elva's own, kept here rather
+	// than in locales.json: Baseline passes unknown entry keys through verbatim.
 	defaultLanguage: 'en',
 	languages: {
 		en: {
@@ -19,7 +20,9 @@ export default {
 			languageName: 'English',
 			title: 'elva',
 			description: 'A multilingual, clean, green, 11ty starter theme',
-			homeLabel: 'Home'
+			homeLabel: 'Home',
+			dir: 'ltr',
+			shorthand: 'EN'
 		},
 		sv: {
 			contentDir: 'content/sv/',
@@ -27,7 +30,9 @@ export default {
 			languageName: 'Svenska',
 			title: 'elva',
 			description: 'En flerspråkig, ren, grön, 11ty starter theme',
-			homeLabel: 'Hem'
+			homeLabel: 'Hem',
+			dir: 'ltr',
+			shorthand: 'SE'
 		}
 	},
 
