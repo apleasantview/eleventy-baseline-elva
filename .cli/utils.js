@@ -2,20 +2,20 @@ import colors from 'yoctocolors';
 import * as path from 'path';
 import { readFileSync, rmSync, existsSync, readdirSync } from 'fs';
 
-export const LOCALES_PATH = path.join(process.cwd(), 'content', '_data', 'locales.json');
-export const SETTINGS_PATH = path.join(process.cwd(), 'content', '_data', 'settings.json');
-export const BLOGROLL_PATH = path.join(process.cwd(), 'content', '_data', 'blogroll.json');
+export const LOCALES_PATH = path.join(process.cwd(), 'src', '_data', 'locales.json');
+export const BLOGROLL_PATH = path.join(process.cwd(), 'src', '_data', 'blogroll.json');
 export const PACKAGE_PATH = path.join(process.cwd(), 'package.json');
-export const THEMES_PATH = path.join(process.cwd(), 'themes');
-export const COLLECTIONS_PATH = path.join(process.cwd(), 'content', '_data', 'types.json');
+export const THEMES_PATH = path.join(process.cwd(), 'src', 'themes');
+export const COLLECTIONS_PATH = path.join(process.cwd(), 'src', '_data', 'types.json');
 export const COLLECTIONS_TEMPLATE_PATH = path.join(process.cwd(), '.cli', 'templates', 'collection.11tydata.js');
-export const TRANSLATIONS_DIR = path.join(process.cwd(), 'content', '_data', 'translations');
+export const TRANSLATIONS_DIR = path.join(process.cwd(), 'src', '_data', 'translations');
 
 export const getTemplatePartChoices = ({ type = 'all' } = {}) => {
-	const settings = JSON.parse(readFileSync(SETTINGS_PATH, 'utf-8'));
-	const theme = settings.theme || 'default';
-	const layoutsDir = path.join(process.cwd(), 'themes', theme, '_layouts');
-	const includesDir = path.join(process.cwd(), 'themes', theme, '_includes');
+	// Read the theme the same way src/_data/_elva.js does. It used to come from
+	// settings.json, which is now a JS module the CLI cannot parse.
+	const theme = process.env.ELVA_THEME || 'default';
+	const layoutsDir = path.join(process.cwd(), 'src', 'themes', theme, '_layouts');
+	const includesDir = path.join(process.cwd(), 'src', 'themes', theme, '_includes');
 
 	const choices = [];
 

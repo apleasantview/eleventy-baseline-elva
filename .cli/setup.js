@@ -1,13 +1,8 @@
 import { input, rawlist, confirm } from '@inquirer/prompts';
 import { readFileSync, writeFileSync, readdirSync, statSync, existsSync, unlinkSync, cpSync } from 'fs';
-import { success, error, warning, PACKAGE_PATH, SETTINGS_PATH, THEMES_PATH, getLocaleData } from './utils.js';
+import { success, error, warning, info, PACKAGE_PATH, THEMES_PATH, getLocaleData } from './utils.js';
 import { getProperty } from 'dot-prop';
 import * as path from 'path';
-
-const getSettings = () => {
-	const data = JSON.parse(readFileSync(SETTINGS_PATH, 'utf-8'));
-	return data;
-};
 
 const getPackage = () => {
 	const data = JSON.parse(readFileSync(PACKAGE_PATH, 'utf-8'));
@@ -26,16 +21,11 @@ const deepMerge = (target, source) => {
 	return result;
 };
 
-const updateSettings = (settings) => {
-	const existingSettings = getSettings();
-	const merged = deepMerge(existingSettings, settings);
-
-	if (JSON.stringify(existingSettings) !== JSON.stringify(merged)) {
-		writeFileSync(SETTINGS_PATH, JSON.stringify(merged, null, 4), 'utf-8');
-		success('settings.json updated.');
-	} else {
-		warning('settings.json has not changed.');
-	}
+// elva's own settings are a JS module (src/_data/_elva.js), not JSON, so the CLI
+// cannot merge into them. Print what would have been written and let the user apply it.
+const reportSettings = (settings) => {
+	info('These belong in src/_data/_elva.js — the CLI cannot edit a JS module:');
+	console.log(JSON.stringify(settings, null, 4));
 };
 
 const updatePackageJson = (packageData) => {
@@ -51,11 +41,11 @@ const updatePackageJson = (packageData) => {
 	}
 };
 
+// The theme is read from the environment now (src/_data/_elva.js), so there is no
+// file to write. Tell the user how to select it instead.
 const setActiveTheme = (theme) => {
-	const existingSettings = JSON.parse(readFileSync(SETTINGS_PATH, 'utf-8'));
-	existingSettings.theme = theme;
-	writeFileSync(SETTINGS_PATH, JSON.stringify(existingSettings, null, 4));
-	success(`Theme '${theme}' selected.`);
+	success(`Theme '${theme}' available.`);
+	info(`Select it with ELVA_THEME=${theme}, or change the default in src/_data/_elva.js.`);
 };
 
 const setupSite = async () => {
@@ -134,7 +124,7 @@ const setupSite = async () => {
 		}
 	});
 
-	updateSettings({
+	reportSettings({
 		author: {
 			name: newPackageJson.authorName,
 			url: newPackageJson.authorUrl,
@@ -153,7 +143,7 @@ const setupTheme = async () => {
 		.map((folder) => ({ name: folder.name, value: folder.name }));
 
 	if (themeDirectories.length === 0) {
-		error('No themes found in the themes/ directory.');
+		error('No themes found in the src/themes/ directory.');
 		return;
 	}
 
@@ -195,7 +185,7 @@ const setupNewTheme = async () => {
 		return;
 	}
 
-	const themesPath = path.join(process.cwd(), 'themes');
+	const themesPath = path.join(process.cwd(), 'src', 'themes');
 	const sourcePath = path.join(themesPath, 'default');
 	const destPath = path.join(themesPath, sanitizedName);
 
@@ -227,7 +217,7 @@ const deleteDefaultContent = async () => {
 
 	for (const locale of localesData.locales) {
 		for (const collection of collections) {
-			const collectionDir = path.join(process.cwd(), 'content', locale.value, collection);
+			const collectionDir = path.join(process.cwd(), 'src', 'content', locale.value, collection);
 			if (!existsSync(collectionDir)) {
 				continue;
 			}

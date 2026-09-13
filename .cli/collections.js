@@ -22,7 +22,7 @@ const saveCollection = (data) => {
 };
 
 const createCollectionFolder = (collectionName, localeKey) => {
-	const collectionDir = path.join(process.cwd(), 'content', localeKey, collectionName);
+	const collectionDir = path.join(process.cwd(), 'src', 'content', localeKey, collectionName);
 	if (!existsSync(collectionDir)) {
 		mkdirSync(collectionDir, { recursive: true });
 	}
@@ -171,7 +171,7 @@ const removeCollection = async () => {
 	// delete content folders for each locale
 	const localesData = getLocaleData();
 	for (const locale of localesData.locales) {
-		const collectionDir = path.join(process.cwd(), 'content', locale.value, choice);
+		const collectionDir = path.join(process.cwd(), 'src', 'content', locale.value, choice);
 		if (existsSync(collectionDir)) {
 			rmSync(collectionDir, { recursive: true, force: true });
 		}
@@ -291,7 +291,7 @@ const syncTemplates = () => {
 
 	for (const [collectionName] of Object.entries(collections)) {
 		for (const locale of localesData.locales) {
-			const collectionDir = path.join(process.cwd(), 'content', locale.value, collectionName);
+			const collectionDir = path.join(process.cwd(), 'src', 'content', locale.value, collectionName);
 			if (existsSync(collectionDir)) {
 				const filePath = path.join(collectionDir, `${collectionName}.11tydata.js`);
 				writeFileSync(filePath, templateContent);
