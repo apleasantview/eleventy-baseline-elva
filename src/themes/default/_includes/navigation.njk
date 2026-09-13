@@ -4,7 +4,7 @@
 		class="site-logo"
 		href="{{ home }}"
 		{% if page.url === home %}aria-current="page"{% endif %}
-		aria-label="{{ 'header.home' | translate }}"
+		aria-label="{{ 'header.home' | t }}"
 	>
 		<svg
 			fill="none"
@@ -16,7 +16,7 @@
 			aria-labelledby="logo-title"
 			role="img"
 		>
-			<title id="logo-title">{{ 'meta.title' | translate }}</title>
+			<title id="logo-title">{{ 'meta.title' | t }}</title>
 			<clipPath id="a"><path d="m0 0h541v242h-541z" /></clipPath>
 			<clipPath id="b"><path d="m0 0h541v242h-541z" /></clipPath>
 			<g clip-path="url(#a)">

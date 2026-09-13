@@ -11,7 +11,11 @@ layout: base
 					>{{ date | formatdate }}</time
 				>
 			</li>
-			<li class="meta-reading-time">{{ content | readingtime }}</li>
+			{%- set minutes = content | readingtime %}
+			<li class="meta-reading-time">
+				{%- if minutes %}{{ 'readingTime.count' | t({ count: minutes, minutes: minutes }) }}
+				{%- else %}{{ 'readingTime.underMinute' | t }}{% endif -%}
+			</li>
 			{%- for tag in tags | filterprivatetags %}
 				{%- set tagUrl %}/{{ lang }}/tag/{{ tag | slugify }}/{% endset %}
 				<li class="meta-tag">

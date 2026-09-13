@@ -7,8 +7,8 @@ seo:
 ---
 {
     "version": "https://jsonfeed.org/version/1.1",
-    "title": "{{ label }} {{ _elva.meta.separator }} {{ 'meta.jsonTitle' | translate }} {{ _elva.meta.separator }} {{ 'meta.title' | translate }}",
-    "description": "{{ 'meta.description' | translate }}",
+    "title": "{{ label }} {{ _elva.meta.separator }} {{ 'meta.jsonTitle' | t }} {{ _elva.meta.separator }} {{ 'meta.title' | t }}",
+    "description": "{{ 'meta.description' | t }}",
     "language": "{{ page.lang }}",
     "home_page_url": "{{ "/" | htmlBaseUrl(settings.url) }}",
     "feed_url": "{{ permalink | htmlBaseUrl(settings.url) }}",

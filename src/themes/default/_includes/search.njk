@@ -9,12 +9,12 @@
 			@keydown.up.prevent="navigate(-1)"
 			@keydown.down.prevent="navigate(1)"
 			@keydown.enter.prevent="selectResult"
-			placeholder="{{ 'search.placeholder' | translate }}"
-			aria-label="{{ 'search.placeholder' | translate }}"
+			placeholder="{{ 'search.placeholder' | t }}"
+			aria-label="{{ 'search.placeholder' | t }}"
 			aria-autocomplete="list"
 			x-bind:aria-expanded="results.length > 0"
 		/>
-		<button type="button" class="button" @click="filter()" aria-label="{{ 'search.submit' | translate }}">
+		<button type="button" class="button" @click="filter()" aria-label="{{ 'search.submit' | t }}">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				width="24"
@@ -59,11 +59,11 @@
 				type="search"
 				name="q"
 				value=""
-				placeholder="{{ 'search.placeholder' | translate }}"
-				aria-label="{{ 'search.placeholder' | translate }}"
+				placeholder="{{ 'search.placeholder' | t }}"
+				aria-label="{{ 'search.placeholder' | t }}"
 			/>
 			<input type="hidden" name="sites" value="{{ settings.url | replace('https://', '') | replace('http://', '') }}" />
-			<button type="submit" class="button" aria-label="{{ 'search.submit' | translate }}">
+			<button type="submit" class="button" aria-label="{{ 'search.submit' | t }}">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"

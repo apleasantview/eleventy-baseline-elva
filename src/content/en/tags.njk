@@ -20,13 +20,13 @@ const eleventyComputed = {
   // Pairs the en and sv page for the same tag. Baseline builds hreflang from
   // translationKey, not from the URL, so a generated page needs one too.
   translationKey: function(data) { return 'tag-' + this.slugify(data.tag) },
-  title: "{{ 'tags.tagged' | translate }} “{{ tag }}”",
+  title: "{{ 'tags.tagged' | t }} “{{ tag }}”",
   permalink: "{{ ('/' + lang + '/tag/' + (tag | slugify) + '/') | defaultlocaleurl }}",
   tags: function(data) { return ['tag', `tag-${this.slugify(data.tag)}`]; },
   seo: {
     changeFrequency: 'weekly',
     sitemapPriority: '0.3',
-    description: "{{ 'tags.description' | translate }} “{{ tag }}“."
+    description: "{{ 'tags.description' | t }} “{{ tag }}“."
   }
 };
 ---

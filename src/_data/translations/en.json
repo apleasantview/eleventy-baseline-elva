@@ -14,8 +14,8 @@
 	"readingTime": {
 		"underMinute": "Less than 1 minute to read",
 		"count": {
-			"one": "{{ minutes }} minute to read",
-			"other": "{{ minutes }} minutes to read"
+			"one": "{minutes} minute to read",
+			"other": "{minutes} minutes to read"
 		}
 	},
 	"feeds": {
@@ -29,7 +29,7 @@
 	"dark": "Dark",
 	"light": "Light",
 	"lightDarkToggle": "Toggle dark/light theme",
-	"footer": "The year is {{ year }}.",
+	"footer": "The year is {year}.",
 	"search": {
 		"placeholder": "Search",
 		"submit": "Go"
