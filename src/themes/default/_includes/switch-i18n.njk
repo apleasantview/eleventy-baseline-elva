@@ -1,13 +1,13 @@
 <div class="switch-language">
-	{% for lang, properties in locales | dictsort %}
+	{% for lang, properties in settings.languages | dictsort %}
 		{% if page.lang === lang %}
 			<a
 				href="{{ page.url }}"
 				lang="{{ page.lang }}"
 				hreflang="{{ page.lang }}"
-				aria-label="{{ properties.shorthand }}: {{ properties.label }}"
+				aria-label="{{ properties.shorthand }}: {{ properties.languageName }}"
 				aria-current="page"
-				data-tooltip="{{ properties.label }}"
+				data-tooltip="{{ properties.languageName }}"
 				class="current tooltip"
 			>
 				{{ properties.shorthand }}
@@ -15,7 +15,9 @@
 		{% else %}
 			{% set found = false %}
 
-			{% for link in page.url | locale_links | fixlocalelinks %}
+			{# Siblings come from translationKey, not from URL shape, so paginated
+			   pages need no fixing up. #}
+			{% for link in page.translations %}
 				{% if lang === link.lang %}{% set found = link %}{% endif %}
 			{% endfor %}
 
@@ -24,16 +26,16 @@
 					href="{{ found.url }}"
 					lang="{{ found.lang }}"
 					hreflang="{{ found.lang }}"
-					aria-label="{{ properties.shorthand }}: {{ properties.label }}"
-					data-tooltip="{{ properties.label }}"
+					aria-label="{{ properties.shorthand }}: {{ properties.languageName }}"
+					data-tooltip="{{ properties.languageName }}"
 					class="tooltip"
 				>
 					{{ properties.shorthand }}
 				</a>
 			{% else %}
 				<span
-					aria-label="{{ properties.shorthand }}: {{ properties.label }}"
-					data-tooltip="{{ properties.label }}"
+					aria-label="{{ properties.shorthand }}: {{ properties.languageName }}"
+					data-tooltip="{{ properties.languageName }}"
 					class="disabled tooltip"
 				>
 					{{ properties.shorthand }}
