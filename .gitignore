@@ -4,8 +4,9 @@
 dist
 node_modules
 notes.md
-themes/*
-!themes/default
+src/themes/*
+!src/themes/default
 
 # Usual suspects
 temp/
+!.frontmatter/**

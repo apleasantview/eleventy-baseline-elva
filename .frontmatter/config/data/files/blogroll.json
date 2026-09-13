@@ -2,7 +2,7 @@
     "$schema": "https://frontmatter.codes/config/data.files.schema.json",
     "id": "blogroll",
     "title": "Blogroll",
-    "file": "[[workspace]]/content/_data/blogroll.json",
+    "file": "[[workspace]]/src/_data/blogroll.json",
     "fileType": "json",
     "singleEntry": false,
     "labelField": "name",
