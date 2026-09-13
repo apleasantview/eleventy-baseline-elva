@@ -8,10 +8,10 @@ const { workspacePath, filePath, frontMatter } = ContentScript.getArguments();
 async function run() {
     try {
         const types = JSON.parse(
-            readFileSync(join(workspacePath, "content/_data/types.json"), "utf-8")
+            readFileSync(join(workspacePath, "src/_data/types.json"), "utf-8")
         );
         const locales = JSON.parse(
-            readFileSync(join(workspacePath, "content/_data/locales.json"), "utf-8")
+            readFileSync(join(workspacePath, "src/_data/locales.json"), "utf-8")
         );
 
         const fileDir = dirname(filePath);

@@ -24,7 +24,7 @@ async function run() {
     const page = await browser.newPage();
 
     const slug = slugify(frontMatter?.title || 'thumbnail', { decamelize: false });
-    const outputDir = join(workspacePath, "content/assets/img/og");
+    const outputDir = join(workspacePath, "src/assets/img/og");
     const outputPath = join(outputDir, `opengraph-${slug}.png`);
 
     try {
