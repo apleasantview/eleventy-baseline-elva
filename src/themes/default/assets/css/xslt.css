@@ -1,6 +1,6 @@
-{% include './reset.css' %}
-{% include './variables.css' %}
-{% include './styles.css' %}
+@import './reset.css';
+@import './variables.css';
+@import './styles.css';
 
 .rss-xslt h1 {
     margin-top: var(--space-s-l);

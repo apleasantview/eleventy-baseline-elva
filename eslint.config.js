@@ -10,11 +10,11 @@ export default defineConfig([
 		...js.configs.recommended
 	},
 	{
-		files: ['**/*.{js,mjs,cjs}', '**/*.11tydata.js', 'content/_data/**/*.{js,mjs,cjs}', 'elva/**/*.{js,mjs,cjs}'],
+		files: ['**/*.{js,mjs,cjs}', '**/*.11tydata.js', 'src/_data/**/*.{js,mjs,cjs}', 'elva/**/*.{js,mjs,cjs}'],
 		languageOptions: { globals: { ...globals.node } }
 	},
 	{
-		files: ['content/assets/**/*.{js,mjs,cjs}', 'themes/js/**/*.{js,mjs,cjs}'],
+		files: ['src/assets/**/*.{js,mjs,cjs}', 'src/themes/**/assets/js/**/*.{js,mjs,cjs}'],
 		languageOptions: { globals: { ...globals.browser } }
 	}
 ]);
