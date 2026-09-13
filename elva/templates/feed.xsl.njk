@@ -18,8 +18,8 @@ seo:
 		<body class="rss-xslt">
 			<main id="content">
 				<div class="entry-content">
-					<p class="notice">{{ 'feeds.info' | translate | safe }}</p>
-					<h1>{{ 'feeds.title' | translate }}</h1>
+					<p class="notice">{{ 'feeds.info' | t | safe }}</p>
+					<h1>{{ 'feeds.title' | t }}</h1>
 					<ul class="posts">
 						<xsl:for-each select="/atom:feed/atom:entry">
 							<li>

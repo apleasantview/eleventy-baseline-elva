@@ -1,8 +1,8 @@
 // calculate the time to read of a chunk of text (to the nearest minute)
 // based on https://www.bobmonsour.com/posts/calculating-reading-time/
-import { translate } from './translate.js';
-
-export async function readingtime(text) {
+// returns the number of minutes; the caller picks the string, because Baseline's
+// `t` is a registered filter and its lookup is not importable.
+export function readingtime(text) {
 	let content = new String(text);
 	const speed = 240; // reading speed in words per minute
 
@@ -17,11 +17,5 @@ export async function readingtime(text) {
 	let words = plain.split(' ');
 	let count = words.length;
 
-	// calculate the reading time
-	let readingTime = Math.round(count / speed);
-	if (readingTime === 0) {
-		return this.ctx.translations[this.page.lang || this.ctx.lang].readingTime.underMinute;
-	} else {
-		return await translate.call(this, 'readingTime.count', this.page.lang || this.ctx.lang, { minutes: readingTime });
-	}
+	return Math.round(count / speed);
 }

@@ -8,8 +8,8 @@ seo:
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="{{ ('/' + lang + '/feed/feed.xsl') | defaultlocaleurl }}" type="text/xsl"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:base="{{ "/" | htmlBaseUrl(settings.url) }}">
-    <title>{{ label }} {{ _elva.meta.separator }} {{ 'meta.rssTitle' | translate }} {{ _elva.meta.separator }} {{ 'meta.title' | translate }}</title>
-    <subtitle>{{ 'meta.description' | translate }}</subtitle>
+    <title>{{ label }} {{ _elva.meta.separator }} {{ 'meta.rssTitle' | t }} {{ _elva.meta.separator }} {{ 'meta.title' | t }}</title>
+    <subtitle>{{ 'meta.description' | t }}</subtitle>
 	<icon>{{ "/assets/img/icon-512.png" | htmlBaseUrl(settings.url) | cdnify }}</icon>
     <link href="{{ permalink | htmlBaseUrl(settings.url) }}" rel="self"/>
     <link href="{{ "/" | htmlBaseUrl(settings.url) }}" />	

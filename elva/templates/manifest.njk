@@ -7,9 +7,9 @@ excludeFromSitemap: true
 {
 	"lang": "{{ locales[page.lang].locale or page.lang }}",
 	"dir": "{{ locales[page.lang].dir or 'ltr' }}",
-	"short_name": "{{ 'meta.title' | translate }}",
-	"name": "{{ 'meta.title' | translate }}",
-	"description": "{{ 'meta.description' | translate }}",
+	"short_name": "{{ 'meta.title' | t }}",
+	"name": "{{ 'meta.title' | t }}",
+	"description": "{{ 'meta.description' | t }}",
 	"categories": {{ _elva.manifest.categories | dump | safe }},
 	"orientation": "{{ _elva.manifest.orientation }}",
 	"scope": "{{ '/' | htmlBaseUrl(settings.url) }}",
